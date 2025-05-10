@@ -2,21 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" name="viewport" content="width=200" />
-    <title>Clocked In</title>
+    <title>ClockedIn</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <!-- <div class="tabs">
-      <button class="tab-button active" data-tab="search">Search</button>
-      <button class="tab-button" data-tab="history">History</button>
-      <button class="tab-button" data-tab="saved">Saved</button>
-    </div> -->
-
     <div id="tab-content">
       <div class="tab-panel" id="search">
         <div class="container">
-          <h1>Clocked In</h1>
-          <form>
+          <h1>ClockedIn</h1>
+          <form id="my">
             <label for="url">LinkedIn Job Search URL</label>
             <input
               type="text"
@@ -59,9 +53,6 @@
         </div>
       </div>
     </div>
-    <div class="tab-panel hidden" id="history"></div>
-    <div class="tab-panel hidden" id="saved"></div>
-
     <script src="popup.js"></script>
   </body>
 </html>
