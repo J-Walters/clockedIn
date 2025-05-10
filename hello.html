@@ -1,6 +1,67 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=200" />
+    <title>Clocked In</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
   <body>
-    <h1>Hello Extensions</h1>
+    <!-- <div class="tabs">
+      <button class="tab-button active" data-tab="search">Search</button>
+      <button class="tab-button" data-tab="history">History</button>
+      <button class="tab-button" data-tab="saved">Saved</button>
+    </div> -->
+
+    <div id="tab-content">
+      <div class="tab-panel" id="search">
+        <div class="container">
+          <h1>Clocked In</h1>
+          <form>
+            <label for="url">LinkedIn Job Search URL</label>
+            <input
+              type="text"
+              id="url"
+              placeholder="Paste your LinkedIn URL here"
+            />
+
+            <label for="radius">Search Radius (miles)</label>
+            <input type="number" id="radius" min="1" placeholder="25" />
+
+            <label for="keywords">Keywords</label>
+            <input
+              type="text"
+              id="keywords"
+              placeholder="e.g., Software Engineer"
+            />
+
+            <label for="time-filter">Filter by Time</label>
+            <select id="time-filter">
+              <option>Past 30 Minutes</option>
+              <option>Past Hour</option>
+              <option>Past 2 Hours</option>
+              <option>Past 24 Hours</option>
+            </select>
+            <p class="helper-text">
+              Select the time frame to filter job postings.
+            </p>
+
+            <label for="sort">Sort By</label>
+            <select id="sort">
+              <option>Relevance</option>
+              <option>Most Recent</option>
+            </select>
+            <p class="helper-text">
+              Select how you want the job listings to be sorted.
+            </p>
+
+            <button type="submit">Go to LinkedIn</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="tab-panel hidden" id="history"></div>
+    <div class="tab-panel hidden" id="saved"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>
