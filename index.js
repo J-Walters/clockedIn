@@ -13,6 +13,8 @@ formEl.addEventListener('submit', (e) => {
   }
 
   sentence = sentence.slice(0, -1);
+
+  chrome.tabs.create({ url: sentence });
 });
 
 // Here's a breakdown of the key parameters in a LinkedIn Job Search URL:
