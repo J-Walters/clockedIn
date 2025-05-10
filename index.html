@@ -3,46 +3,54 @@
   <head>
     <meta charset="UTF-8" name="viewport" content="width=200" />
     <title>ClockedIn</title>
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <div id="tab-content">
       <div class="tab-panel" id="search">
         <div class="container">
           <h1>ClockedIn</h1>
-          <form id="my">
-            <label for="url">LinkedIn Job Search URL</label>
+          <form id="form">
+            <!-- <label for="url">LinkedIn Job Search URL</label>
             <input
               type="text"
               id="url"
               placeholder="Paste your LinkedIn URL here"
-            />
+              name="url"
+            /> -->
 
             <label for="radius">Search Radius (miles)</label>
-            <input type="number" id="radius" min="1" placeholder="25" />
+            <input
+              type="number"
+              id="radius"
+              min="25"
+              placeholder="25"
+              name="distance"
+            />
 
             <label for="keywords">Keywords</label>
             <input
               type="text"
               id="keywords"
               placeholder="e.g., Software Engineer"
+              name="keywords"
             />
 
             <label for="time-filter">Filter by Time</label>
-            <select id="time-filter">
-              <option>Past 30 Minutes</option>
-              <option>Past Hour</option>
-              <option>Past 2 Hours</option>
-              <option>Past 24 Hours</option>
+            <select id="time-filter" name="f_TPR">
+              <option value="r1800">Past 30 Minutes</option>
+              <option value="r3600">Past Hour</option>
+              <option value="r7200">Past 2 Hours</option>
+              <option value="r86400">Past 24 Hours</option>
             </select>
             <p class="helper-text">
               Select the time frame to filter job postings.
             </p>
 
             <label for="sort">Sort By</label>
-            <select id="sort">
-              <option>Relevance</option>
-              <option>Most Recent</option>
+            <select id="sort" name="sortBy">
+              <option value="R">Relevance</option>
+              <option selected value="DD">Most Recent</option>
             </select>
             <p class="helper-text">
               Select how you want the job listings to be sorted.
@@ -53,6 +61,6 @@
         </div>
       </div>
     </div>
-    <script src="popup.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
