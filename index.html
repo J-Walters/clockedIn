@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" name="viewport" content="width=200" />
+    <meta charset="UTF-8" name="viewport" content="width=300" />
     <title>ClockedIn</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div id="tab-content">
-      <div class="tab-panel" id="search">
-        <div class="container">
-          <h1>ClockedIn</h1>
-          <form id="form">
-            <!-- <label for="url">LinkedIn Job Search URL</label>
-            <input
-              type="text"
-              id="url"
-              placeholder="Paste your LinkedIn URL here"
-              name="url"
-            /> -->
+    <header>
+      <h1>ClockedIn</h1>
+    </header>
 
-            <label for="radius">Search Radius (miles)</label>
+    <nav class="tabs">
+      <button class="tab-button active" data-tab="search">Search</button>
+      <button class="tab-button" data-tab="saved">History</button>
+    </nav>
+
+    <main id="tab-content">
+      <!-- Search Tab -->
+      <section class="tab-panel" id="search-tab">
+        <div class="container">
+          <form id="form">
+            <label for="radius">Search Radius (miles):</label>
             <input
               type="number"
               id="radius"
@@ -28,7 +29,7 @@
               name="distance"
             />
 
-            <label for="keywords">Keywords</label>
+            <label for="keywords">Keywords:</label>
             <input
               type="text"
               id="keywords"
@@ -36,7 +37,7 @@
               name="keywords"
             />
 
-            <label for="time-filter">Filter by Time</label>
+            <label for="time-filter">Filter by Time:</label>
             <select id="time-filter" name="f_TPR">
               <option value="r1800">Past 30 Minutes</option>
               <option value="r3600">Past Hour</option>
@@ -47,7 +48,7 @@
               Select the time frame to filter job postings.
             </p>
 
-            <label for="sort">Sort By</label>
+            <label for="sort">Sort By:</label>
             <select id="sort" name="sortBy">
               <option value="R">Relevance</option>
               <option selected value="DD">Most Recent</option>
@@ -59,8 +60,17 @@
             <button type="submit">Go to LinkedIn</button>
           </form>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <!-- Saved Tab -->
+      <section class="tab-panel hidden" id="saved-tab">
+        <div class="container">
+          <!-- <p>No saved searches yet.</p> -->
+          <ul id="saved-list"></ul>
+        </div>
+      </section>
+    </main>
+
     <script src="index.js"></script>
   </body>
 </html>
