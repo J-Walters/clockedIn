@@ -36,7 +36,7 @@ I built ClockedIn to:
 ### 🛠 Tech Stack
 
 - HTML, CSS, JavaScript (Vanilla)
-- Chrome Extension API (popup, tabs, localStorage fallback)
+- Chrome Extension API 
 - Font Awesome for icons
 - Minimal dependencies, zero build tools
 
