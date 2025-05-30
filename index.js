@@ -52,25 +52,28 @@ function renderSavedList(list) {
     return;
   }
 
-  [...list].reverse().forEach((item, index) => {
+  [...list].reverse().forEach((item) => {
     const el = document.createElement('li');
     el.className = 'saved-card';
     el.innerHTML = `
-    <div class="text">
-      <strong>${item.title}</strong>
-      <div class="subtext">${item.time} • within ${item.distance} miles</div>
-    </div>
-    <button class="delete-btn" data-index="${index}">&times;</button>
-  `;
+      <div class="text">
+        <strong>${item.title}</strong>
+        <div class="subtext">${item.time} • within ${item.distance} miles</div>
+      </div>
+      <button class="delete-btn" data-url="${item.url}">&times;</button>
+    `;
+
     el.addEventListener('click', (e) => {
       if (e.target.classList.contains('delete-btn')) {
-        savedSearches.splice(index, 1);
+        const url = e.target.getAttribute('data-url');
+        savedSearches = savedSearches.filter((search) => search.url !== url);
         localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
         renderSavedList(savedSearches);
       } else {
         window.open(item.url, '_blank');
       }
     });
+
     savedList.appendChild(el);
   });
 }
@@ -84,21 +87,3 @@ function decodeTimeFrame(value) {
   };
   return map[value] || 'Recent';
 }
-
-// Here's a breakdown of the key parameters in a LinkedIn Job Search URL:
-// https://www.linkedin.com/jobs/search/?alertAction=viewjobs&currentJobId=4225459777&distance=25&f_E=1%2C2%2C3&f_TPR=a1746746324-&geoId=90000070&keywords=software%20engineer&origin=JOB_SEARCH_PAGE_JOB_FILTER&sortBy=DD&spellCorrectionEnabled=true&start=75
-// https://www.linkedin.com/jobs/search-results/?f_TPR=r86400&keywords=software%20engineer
-
-// distance: Controls the job search radius in miles. Example: distance=50 (search within 50 miles).
-// f_TPR: Filters job postings by recency.
-// r3600 - Jobs posted within the last hour.
-// r86400 - Jobs posted within the last 24 hours.
-// r604800 - Jobs posted within the last week.
-// r2592000 - Jobs posted within the last month.
-// geoId: Specifies the geographic location. Example: If searching for jobs in Florida, you need the geoId for Florida.
-// keywords: Determines the job title or keywords being searched. %20 represents spaces.
-// Example: keywords=senior%20operations%20manager (searches for “Senior Operations Manager”).
-// Example: keywords=Director%20of%20Operations (searches for “Director of Operations”).
-// location: Defines the search location. Example: location=Florida.
-// origin: Indicates that the search is being filtered from the job search page. (You can ignore this.)
-// sortBy: Sorts results. Options: R (Relevance), DD (Date posted).

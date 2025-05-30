@@ -117,34 +117,6 @@ button {
   display: none;
 }
 
-/* .saved-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #fffaf5;
-  border-radius: 16px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.saved-card .text {
-  flex: 1;
-  padding-right: 1rem;
-  line-height: 1.4;
-  font-size: 14px;
-  color: #5b2e1f;
-}
-
-.saved-card .text strong {
-  font-size: 15px;
-  font-weight: 600;
-  display: inline-block;
-  margin-bottom: 2px;
-} */
-
 #saved-list {
   list-style: none;
   padding: 0;
