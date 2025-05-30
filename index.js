@@ -12,7 +12,12 @@ addNewBtn.addEventListener('click', () => {
     <div style="display: flex; flex-direction: column; gap: 8px;">
       <input type="text" name="title" placeholder="Search Title" required />
       <input type="url" name="url" placeholder="Search URL" required />
-      <input type="text" name="time" placeholder="e.g., Past Hour" />
+      <select name="time">
+        <option value="Past 30 minutes">Past 30 minutes</option>
+        <option value="Past hour">Past hour</option>
+        <option value="Past 2 hours">Past 2 hours</option>
+        <option value="Past 24 hours">Past 24 hours</option>
+      </select>
       <input type="text" name="distance" placeholder="Distance (miles)" />
       <button type="submit" class="search-button">Save</button>
     </div>
