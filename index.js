@@ -2,8 +2,43 @@ const formEl = document.querySelector('#form');
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabPanels = document.querySelectorAll('.tab-panel');
 const savedList = document.getElementById('saved-list');
+const addNewBtn = document.querySelector('.add-new-button');
 
 let savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
+
+addNewBtn.addEventListener('click', () => {
+  const form = document.createElement('form');
+  form.innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <input type="text" name="title" placeholder="Search Title" required />
+      <input type="url" name="url" placeholder="Search URL" required />
+      <input type="text" name="time" placeholder="e.g., Past Hour" />
+      <input type="text" name="distance" placeholder="Distance (miles)" />
+      <button type="submit" class="search-button">Save</button>
+    </div>
+  `;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const entry = {
+      title: data.get('title') || 'Untitled Search',
+      url: data.get('url'),
+      time: data.get('time') || 'Recent',
+      distance: data.get('distance') || 'N/A',
+    };
+
+    savedSearches.push(entry);
+    localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+    renderSavedList(savedSearches);
+
+    addNewBtn.style.display = 'inline-block';
+    form.remove();
+  });
+
+  savedList.insertBefore(form, savedList.firstChild || null);
+  addNewBtn.style.display = 'none';
+});
 
 tabButtons.forEach((button) => {
   button.addEventListener('click', () => {
