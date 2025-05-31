@@ -41,6 +41,8 @@ async function buttonClick() {
   });
   console.log('hello');
   console.log(tab.url);
+  const urlInput = form.querySelector('#url-input');
+  urlInput.value = tab.url;
 }
 
 addNewBtn.addEventListener('click', () => {
@@ -62,6 +64,16 @@ addNewBtn.addEventListener('click', () => {
   `;
 
   const copyBtn = form.querySelector('#copy-button');
+
+  copyBtn.onclick = async () => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    console.log('hello');
+    const urlInput = form.querySelector('#url-input');
+    urlInput.value = tab.url;
+  };
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
