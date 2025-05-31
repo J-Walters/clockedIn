@@ -64,6 +64,7 @@ addNewBtn.addEventListener('click', () => {
     });
     const urlInput = form.querySelector('#url-input');
     urlInput.value = tab.url;
+    copyBtn.textContent = 'Copied!';
   };
 
   form.addEventListener('submit', (e) => {
