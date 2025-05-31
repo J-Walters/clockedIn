@@ -20,7 +20,7 @@ checkAlarmState();
 chrome.alarms.onAlarm.addListener(() => {
   chrome.notifications.create({
     type: 'basic',
-    iconUrl: 'icon.png',
+    iconUrl: '/assets/icon.png',
     title: 'Time to check for jobs!',
     message: 'Don’t forget to run your ClockedIn search today!',
     silent: false,
