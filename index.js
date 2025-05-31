@@ -2,9 +2,10 @@ const formEl = document.querySelector('#form');
 const tabButtons = document.querySelectorAll('.tab-button');
 const tabPanels = document.querySelectorAll('.tab-panel');
 const savedList = document.getElementById('saved-list');
-const addNewBtn = document.querySelector('.add-new-button');
+const addNewBtn = document.querySelector('.secondary-button');
 const checkbox = document.querySelector('#enabled-checkbox');
 const notifSelect = document.querySelector('#notifications');
+const exportAnchor = document.querySelector('#export-anchor');
 
 let savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
 
@@ -154,3 +155,22 @@ function decodeTimeFrame(value) {
   };
   return map[value] || 'Recent';
 }
+
+function convertToCSV(arr) {
+  const headers = Object.keys(arr[0]).join(',');
+  const rows = arr.map((obj) =>
+    Object.values(obj)
+      .map((value) => `"${String(value).replace(/"/g, '""')}"`)
+      .join(',')
+  );
+  return [headers, ...rows].join('\n');
+}
+
+exportAnchor.addEventListener('click', () => {
+  const csvData = convertToCSV(savedSearches);
+  const csvBlob = new Blob([csvData], { type: 'text/csv' });
+
+  const url = URL.createObjectURL(csvBlob);
+  exportAnchor.href = url;
+  exportAnchor.download = 'Job Search Data.csv';
+});

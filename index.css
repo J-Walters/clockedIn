@@ -106,7 +106,7 @@ select:focus {
   margin-bottom: 1rem;
 }
 
-.add-new-button {
+.secondary-button {
   display: block;
   margin: 1rem auto 0;
   padding: 8px 14px;
@@ -120,7 +120,7 @@ select:focus {
   transition: background 0.2s ease, border 0.2s ease;
 }
 
-.add-new-button:hover {
+.secondary-button:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
