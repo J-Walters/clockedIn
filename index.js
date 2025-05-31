@@ -3,8 +3,17 @@ const tabButtons = document.querySelectorAll('.tab-button');
 const tabPanels = document.querySelectorAll('.tab-panel');
 const savedList = document.getElementById('saved-list');
 const addNewBtn = document.querySelector('.add-new-button');
+const inputEl = document.getElementById('input');
 
 let savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
+
+//saving selected choice in storage
+inputEl.addEventListener('change', () => {
+  const isChecked = inputEl.checked;
+  chrome.storage.local.set({ inputKey: isChecked }, function () {
+    console.log('Data saved');
+  });
+});
 
 addNewBtn.addEventListener('click', () => {
   const form = document.createElement('form');

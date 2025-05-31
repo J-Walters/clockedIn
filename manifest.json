@@ -1,10 +1,18 @@
 {
-    "name": "ClockedIn",
-    "description": "Base Level Extension",
-    "version": "1.0",
-    "manifest_version": 3,
-    "action": {
-      "default_popup": "index.html",
-      "default_icon": "icon.png"
-    }
-  }
+  "name": "ClockedIn",
+  "description": "Base Level Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage"
+  ]
+}
