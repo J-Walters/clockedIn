@@ -1,14 +1,14 @@
 {
   "name": "ClockedIn",
-  "description": "Base Level Extension",
+  "description": "Save and organize your LinkedIn job searches.",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "index.html",
-    "default_icon": "src/assets/extension-logo.png"
+    "default_popup": "popup.html",
+    "default_icon": "extension-logo.png"
   },
   "permissions": [
     "alarms",

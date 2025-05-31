@@ -1,3 +1,4 @@
+/*global chrome*/
 const STORAGE_KEY = 'inputKey';
 
 async function checkAlarmState() {
