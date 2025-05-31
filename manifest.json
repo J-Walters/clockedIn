@@ -13,6 +13,7 @@
   "permissions": [
     "alarms",
     "notifications",
-    "storage"
+    "storage",
+    "tabs"
   ]
 }
