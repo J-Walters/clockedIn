@@ -126,22 +126,22 @@ select:focus {
 
 .search-button {
   margin-top: 12px;
+  margin-bottom: 1rem;
   padding: 12px 16px;
-  background: linear-gradient(to right, #d97706, #b45309); /* subtle warm gradient */
-  color: white;
+  background: linear-gradient(to right, #c97c4a, #9f5630); /* warm amber-cinnamon gradient */
+  color: #fffaf5;
   font-weight: 600;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 15px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
   transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-  margin-bottom: 1rem;
 }
 
 .search-button:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  background: linear-gradient(to right, #f59e0b, #b45309); /* brighter on hover */
+  background: linear-gradient(to right, #e6a77c, #b96a41); /* slightly brighter caramel tones */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 
