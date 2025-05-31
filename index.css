@@ -203,5 +203,39 @@ select:focus {
   margin-left: 1rem;
 }
 
+/* Settings Styling**/
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5b2e1f;
+  margin-bottom: 4px;
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-wrapper input[type='checkbox'] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
 
 

@@ -73,18 +73,30 @@
         </div>
       </section>
     </main>
-
+    <!-- Settings Tab -->
     <section class="tab-panel hidden" id="settings-tab">
       <div class="container">
-        <div class="">
-          <strong>Notifications</strong>
-          <label class="switch">
+        <div class="settings-group">
+          <strong class="section-title">Notifications</strong>
+
+          <label for="notifications">Reminder Frequency</label>
+          <select id="notifications" name="notifications">
+            <option value="1">Every Hour</option>
+            <option value="3">Every 3 Hours</option>
+            <option value="12">Every 12 Hours</option>
+            <option value="24">Daily</option>
+          </select>
+
+          <div class="checkbox-wrapper">
             <input id="input" type="checkbox" />
-            <!-- <span class="slider"></span> -->
-          </label>
+            <label for="input">Enabled</label>
+          </div>
         </div>
+
+        <button type="submit" class="search-button">Save</button>
       </div>
     </section>
+
     <script src="index.js"></script>
   </body>
 </html>
