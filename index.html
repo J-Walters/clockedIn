@@ -72,29 +72,27 @@
           <ul id="saved-list"></ul>
         </div>
       </section>
-    </main>
-    <!-- Settings Tab -->
-    <section class="tab-panel hidden" id="settings-tab">
-      <div class="container">
-        <div class="settings-group">
-          <strong class="section-title">Notifications</strong>
-
-          <label for="notifications">Reminder Frequency</label>
-          <select id="notifications" name="notifications">
-            <option value="1">Every Hour</option>
-            <option value="3">Every 3 Hours</option>
-            <option value="12">Every 12 Hours</option>
-            <option value="24">Daily</option>
-          </select>
-
-          <div class="checkbox-wrapper">
-            <input id="input" type="checkbox" />
-            <label for="input">Enabled</label>
+      <!-- Settings Tab -->
+      <section class="tab-panel hidden" id="settings-tab">
+        <div class="container">
+          <div class="settings-group">
+            <strong class="section-title">Notifications</strong>
+            <label for="notifications">Reminder Frequency</label>
+            <select id="notifications" name="notifications">
+              <option value="Select a Frequency">Select a Frequency</option>
+              <option value="1">Every Hour</option>
+              <option value="3">Every 3 Hours</option>
+              <option value="12">Every 12 Hours</option>
+              <option value="24">Daily</option>
+            </select>
+            <div class="checkbox-wrapper">
+              <input id="input" type="checkbox" />
+              <label for="input">Enabled</label>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-
+      </section>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>
