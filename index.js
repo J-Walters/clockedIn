@@ -34,25 +34,17 @@ function saveReminderSettings() {
 notifSelect.addEventListener('change', saveReminderSettings);
 checkbox.addEventListener('change', saveReminderSettings);
 
-async function buttonClick() {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    lastFocusedWindow: true,
-  });
-  console.log('hello');
-  console.log(tab.url);
-  const urlInput = form.querySelector('#url-input');
-  urlInput.value = tab.url;
-}
-
 addNewBtn.addEventListener('click', () => {
   const form = document.createElement('form');
   form.innerHTML = `
     <div style="display: flex; flex-direction: column; gap: 8px;">
       <input type="text" name="title" placeholder="Search Title" required />
-      <input id="url-input" type="url" name="url" placeholder="Search URL" required />
-      <button id="copy-button" type='button'>Copy From Url</button>
+      <div class="input-with-button">
+        <input id="url-input" type="url" name="url" placeholder="Search URL" required />
+        <button id="copy-button" type="button">Copy From URL</button>
+      </div>
       <select name="time">
+        <option value="Date Posted">Date Posted</option>
         <option value="Past 30 minutes">Past 30 minutes</option>
         <option value="Past hour">Past hour</option>
         <option value="Past 2 hours">Past 2 hours</option>
