@@ -44,13 +44,13 @@ addNewBtn.addEventListener('click', () => {
         <button id="copy-button" type="button">Copy From URL</button>
       </div>
       <select name="time">
-        <option value="Date Posted">Date Posted</option>
+        <option selected disabled hidden value="Date Posted">Date Posted</option>
         <option value="Past 30 minutes">Past 30 minutes</option>
         <option value="Past hour">Past hour</option>
         <option value="Past 2 hours">Past 2 hours</option>
         <option value="Past 24 hours">Past 24 hours</option>
       </select>
-      <input type="text" name="distance" placeholder="Distance (miles)" />
+      <input type="number" name="distance" placeholder="Distance (miles)" />
       <button type="submit" class="search-button">Save</button>
     </div>
   `;
@@ -62,7 +62,6 @@ addNewBtn.addEventListener('click', () => {
       active: true,
       lastFocusedWindow: true,
     });
-    console.log('hello');
     const urlInput = form.querySelector('#url-input');
     urlInput.value = tab.url;
   };
