@@ -3,16 +3,24 @@ const tabButtons = document.querySelectorAll('.tab-button');
 const tabPanels = document.querySelectorAll('.tab-panel');
 const savedList = document.getElementById('saved-list');
 const addNewBtn = document.querySelector('.add-new-button');
-const inputEl = document.getElementById('input');
+const checkbox = document.querySelector('#enabled-checkbox');
 
 let savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
 
-//saving selected choice in storage
-inputEl.addEventListener('change', () => {
-  const isChecked = inputEl.checked;
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('remindersEnabled');
+  if (saved !== null) {
+    checkbox.checked = saved === 'true';
+  }
+});
+
+checkbox.addEventListener('change', () => {
+  const isChecked = checkbox.checked;
   chrome.storage.local.set({ inputKey: isChecked }, function () {
     console.log('Data saved');
   });
+
+  localStorage.setItem('remindersEnabled', checkbox.checked);
 });
 
 addNewBtn.addEventListener('click', () => {
