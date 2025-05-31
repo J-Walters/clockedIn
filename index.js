@@ -4,24 +4,34 @@ const tabPanels = document.querySelectorAll('.tab-panel');
 const savedList = document.getElementById('saved-list');
 const addNewBtn = document.querySelector('.add-new-button');
 const checkbox = document.querySelector('#enabled-checkbox');
+const notifSelect = document.querySelector('#notifications');
 
 let savedSearches = JSON.parse(localStorage.getItem('savedSearches')) || [];
 
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('remindersEnabled');
+  const savedValue = localStorage.getItem('reminderFrequency');
+
   if (saved !== null) {
     checkbox.checked = saved === 'true';
   }
+
+  if (savedValue) {
+    notifSelect.value = savedValue;
+  }
 });
 
-checkbox.addEventListener('change', () => {
+function saveReminderSettings() {
   const isChecked = checkbox.checked;
-  chrome.storage.local.set({ inputKey: isChecked }, function () {
-    console.log('Data saved');
-  });
+  const selectedFrequency = notifSelect.value;
 
-  localStorage.setItem('remindersEnabled', checkbox.checked);
-});
+  chrome.storage.local.set({ inputKey: [isChecked, selectedFrequency] }, () => {
+    console.log('Settings saved to Chrome storage');
+  });
+}
+
+notifSelect.addEventListener('change', saveReminderSettings);
+checkbox.addEventListener('change', saveReminderSettings);
 
 addNewBtn.addEventListener('click', () => {
   const form = document.createElement('form');
