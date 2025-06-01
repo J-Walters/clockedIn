@@ -4,7 +4,7 @@ import { useState } from 'react';
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   const [showForm, setShowForm] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [control, setControl] = useState({
+  const [form, setFormData] = useState({
     title: '',
     url: '',
     time: '',
@@ -16,7 +16,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   };
 
   const clearForm = () => {
-    setControl({
+    setFormData({
       title: '',
       url: '',
       time: '',
@@ -27,7 +27,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   };
 
   const handleSavedSearch = () => {
-    const newSearch = { ...control };
+    const newSearch = { ...form };
 
     const updatedSearch = [...savedSearches, newSearch];
     localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
@@ -45,7 +45,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
       active: true,
       lastFocusedWindow: true,
     });
-    setControl((prev) => ({ ...prev, url: tab.url }));
+    setFormData((prev) => ({ ...prev, url: tab.url }));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -66,9 +66,9 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               name='title'
               placeholder='Search Title'
               required
-              value={control.title}
+              value={form.title}
               onChange={(e) =>
-                setControl((prev) => ({ ...prev, title: e.target.value }))
+                setFormData((prev) => ({ ...prev, title: e.target.value }))
               }
             />
             <div className='input-with-button'>
@@ -78,9 +78,9 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
                 name='url'
                 placeholder='Search URL'
                 required
-                value={control.url}
+                value={form.url}
                 onChange={(e) =>
-                  setControl((prev) => ({ ...prev, url: e.target.value }))
+                  setFormData((prev) => ({ ...prev, url: e.target.value }))
                 }
               />
               <button id='copy-button' type='button' onClick={handleCopyLink}>
@@ -89,9 +89,9 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
             </div>
             <select
               name='time'
-              value={control.time}
+              value={form.time}
               onChange={(e) =>
-                setControl((prev) => ({ ...prev, time: e.target.value }))
+                setFormData((prev) => ({ ...prev, time: e.target.value }))
               }
             >
               <option selected disabled hidden value='Date Posted'>
@@ -106,17 +106,23 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               type='number'
               name='distance'
               placeholder='Distance (miles)'
-              value={control.distance}
+              value={form.distance}
               onChange={(e) =>
-                setControl((prev) => ({ ...prev, distance: e.target.value }))
+                setFormData((prev) => ({ ...prev, distance: e.target.value }))
               }
             />
-            <button type='submit' className='search-button'>
-              Saved
-            </button>
-            <button onClick={clearForm} type='button' className='search-button'>
-              cancel
-            </button>
+            <div className='button-row'>
+              <button type='submit' className='search-button'>
+                Save
+              </button>
+              <button
+                onClick={clearForm}
+                className='cancel-button'
+                type='button'
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </form>
       )}
