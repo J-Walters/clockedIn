@@ -1,3 +1,6 @@
+import { mock } from 'node:test';
+import { useState } from 'react';
+
 const mockSavedSearches = [
   {
     title: 'Remote React Roles in NYC',
@@ -20,20 +23,34 @@ const mockSavedSearches = [
 ];
 
 function App() {
+  const [savedSearches, setSavedSearches] = useState(mockSavedSearches);
+
   const handleClick = (item) => {
     window.open(item.url, '_blank');
   };
 
-  const list = mockSavedSearches.map((item) => {
+  const handleDelete = (item) => {
+    setSavedSearches((prevSearches) => {
+      return prevSearches.filter((search) => {
+        return search.url !== item.url;
+      });
+    });
+  };
+
+  const list = savedSearches.map((item) => {
     return (
-      <li key={item.url}>
+      <li key={item.url} className='saved-card'>
         <div onClick={() => handleClick(item)} className='text'>
           <strong>{item.title}</strong>
           <div className='subtext'>
             {item.time} • within {item.distance} miles
           </div>
         </div>
-        <button className='delete-btn' data-url={item.url}>
+        <button
+          onClick={() => handleDelete(item)}
+          className='delete-btn'
+          data-url={item.url}
+        >
           &times;
         </button>
       </li>
@@ -42,7 +59,7 @@ function App() {
 
   return (
     <>
-      {mockSavedSearches.length > 0 ? (
+      {savedSearches.length > 0 ? (
         <ul id='saved-list'>{list}</ul>
       ) : (
         <p>No saved searches</p>
