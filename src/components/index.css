@@ -316,27 +316,33 @@ select {
 }
 
 .input-with-button {
+  position: relative;
   display: flex;
-  gap: 8px;
   align-items: center;
+  width: 100%;
 }
 
 .input-with-button input {
-  flex: 1;
-  padding: 10px;
+  width: 100%;
+  padding: 10px 90px 10px 10px; /* add right padding for the button */
   font-size: 14px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
 .input-with-button button {
-  white-space: nowrap;
-  padding: 8px 12px;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 10px;
   font-size: 13px;
   background-color: #fdf6ed;
   color: #7c3a1d;
   border: 1px solid #e2cfc3;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
 }

@@ -67,7 +67,7 @@ export default function App() {
         </button>
       </nav>
 
-      <main className='tab-panel'>
+      <main>
         {activeTab === 'search' && <h1>Im the search content</h1>}
         {activeTab === 'saved' && (
           <>

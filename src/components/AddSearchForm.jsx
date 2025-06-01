@@ -65,6 +65,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               type='text'
               name='title'
               placeholder='Search Title'
+              autoFocus
               required
               value={form.title}
               onChange={(e) =>
