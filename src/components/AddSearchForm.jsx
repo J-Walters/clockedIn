@@ -3,18 +3,20 @@ import { useState } from 'react';
 
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   const [showForm, setShowForm] = useState(true);
+  const [copied, setCopied] = useState(false);
+  const [control, setControl] = useState({
+    title: '',
+    url: '',
+    time: '',
+    distance: '',
+  });
 
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
 
-  const handleSavedSearch = (formData) => {
-    const newSearch = {
-      title: formData.get('title'),
-      url: formData.get('url'),
-      time: formData.get('time'),
-      distance: formData.get('distance'),
-    };
+  const handleSavedSearch = () => {
+    const newSearch = { ...control };
 
     const updatedSearch = [...savedSearches, newSearch];
     localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
@@ -23,15 +25,25 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
       return [...prev, newSearch];
     });
 
+    setControl({
+      title: '',
+      url: '',
+      time: '',
+      distance: '',
+    });
+
     setShowForm(!showForm);
   };
+  ``;
 
   const handleCopyLink = async () => {
     const [tab] = await chrome.tabs.query({
       active: true,
       lastFocusedWindow: true,
     });
-    console.log(tab.url);
+    setControl((prev) => ({ ...prev, url: tab.url }));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -50,6 +62,10 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               name='title'
               placeholder='Search Title'
               required
+              value={control.title}
+              onChange={(e) =>
+                setControl((prev) => ({ ...prev, title: e.target.value }))
+              }
             />
             <div className='input-with-button'>
               <input
@@ -58,12 +74,22 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
                 name='url'
                 placeholder='Search URL'
                 required
+                value={control.url}
+                onChange={(e) =>
+                  setControl((prev) => ({ ...prev, url: e.target.value }))
+                }
               />
               <button id='copy-button' type='button' onClick={handleCopyLink}>
-                Copy From URL
+                {copied ? 'Copied!' : 'Copy From URL'}
               </button>
             </div>
-            <select name='time'>
+            <select
+              name='time'
+              value={control.time}
+              onChange={(e) =>
+                setControl((prev) => ({ ...prev, time: e.target.value }))
+              }
+            >
               <option selected disabled hidden value='Date Posted'>
                 Date Posted
               </option>
@@ -76,9 +102,13 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               type='number'
               name='distance'
               placeholder='Distance (miles)'
+              value={control.distance}
+              onChange={(e) =>
+                setControl((prev) => ({ ...prev, distance: e.target.value }))
+              }
             />
             <button type='submit' className='search-button'>
-              Save
+              Saved
             </button>
           </div>
         </form>
