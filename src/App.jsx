@@ -1,7 +1,13 @@
 import SavedSearchList from './components/SavedSearchList';
+import AddSearchForm from './components/AddSearchForm';
 
 function App() {
-  return <SavedSearchList />;
+  return (
+    <>
+      <AddSearchForm />
+      <SavedSearchList />
+    </>
+  );
 }
 
 export default App;
