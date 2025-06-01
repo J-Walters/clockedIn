@@ -15,6 +15,17 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     setShowForm(!showForm);
   };
 
+  const clearForm = () => {
+    setControl({
+      title: '',
+      url: '',
+      time: '',
+      distance: '',
+    });
+
+    setShowForm(!showForm);
+  };
+
   const handleSavedSearch = () => {
     const newSearch = { ...control };
 
@@ -25,14 +36,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
       return [...prev, newSearch];
     });
 
-    setControl({
-      title: '',
-      url: '',
-      time: '',
-      distance: '',
-    });
-
-    setShowForm(!showForm);
+    clearForm();
   };
   ``;
 
@@ -109,6 +113,9 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
             />
             <button type='submit' className='search-button'>
               Saved
+            </button>
+            <button onClick={clearForm} type='button' className='search-button'>
+              cancel
             </button>
           </div>
         </form>
