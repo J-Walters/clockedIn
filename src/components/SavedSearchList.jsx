@@ -7,11 +7,12 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
 
   // will need to update with ids eventually
   const handleDeleteSearch = (searchToDelete) => {
-    setSavedSearches((prev) => {
-      return prev.filter((search) => {
-        return search.url !== searchToDelete.url;
-      });
-    });
+    const updatedSearches = savedSearches.filter(
+      (search) => search.url !== searchToDelete.url
+    );
+
+    setSavedSearches(updatedSearches);
+    localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
   };
 
   const renderedSearches = savedSearches.map((search) => {
