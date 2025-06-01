@@ -1,3 +1,5 @@
+import { TrashSimple, PencilSimple } from 'phosphor-react';
+
 export default function SavedSearchCard({
   search,
   handleSearchClick,
@@ -16,8 +18,9 @@ export default function SavedSearchCard({
         className='delete-btn'
         data-url={search.url}
       >
-        &times;
+        <TrashSimple size={16} color='#94423e' />
       </button>
+      <PencilSimple size={16} color='#874a21' weight='duotone' />
     </li>
   );
 }

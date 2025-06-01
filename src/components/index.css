@@ -352,3 +352,21 @@ select {
   border-color: #ddbcae;
 }
 
+.trash-icon:hover {
+  animation: wobble 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.trash-icon:hover {
+  animation: wobble 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+@keyframes wobble {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-10deg); }
+  50%  { transform: rotate(10deg); }
+  75%  { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+

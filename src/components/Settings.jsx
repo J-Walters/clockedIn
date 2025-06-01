@@ -1,5 +1,6 @@
 /*global chrome*/
 import { useState, useEffect } from 'react';
+import { Bell, Export } from 'phosphor-react';
 
 export default function Setting() {
   const [enabled, setEnabled] = useState(false);
@@ -37,7 +38,10 @@ export default function Setting() {
 
   return (
     <div className='settings-group'>
-      <strong className='section-title'>Notifications</strong>
+      <strong className='section-title'>
+        <Bell size={16} />
+        Notifications
+      </strong>
       <label htmlFor='notifications'>Reminder Frequency</label>
       <select
         id='notifications'
@@ -78,6 +82,7 @@ export default function Setting() {
 
       <strong className='section-title'>Saved Searches</strong>
       <a id='export-anchor' className='secondary-button'>
+        <Export size={16} color='#874a21' />
         Export saved searches
       </a>
     </div>
