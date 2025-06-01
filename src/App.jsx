@@ -33,31 +33,31 @@ function App() {
     // }, [savedSearches]);
   }, []);
 
-  const handleClick = (item) => {
-    window.open(item.url, '_blank');
+  const handleSearchClick = (search) => {
+    window.open(search.url, '_blank');
   };
 
-  const handleDelete = (item) => {
-    setSavedSearches((prevSearches) => {
-      return prevSearches.filter((search) => {
-        return search.url !== item.url;
+  const handleDeleteSearch = (searchToDelete) => {
+    setSavedSearches((prev) => {
+      return prev.filter((search) => {
+        return search.url !== searchToDelete.url;
       });
     });
   };
 
-  const list = savedSearches.map((item) => {
+  const renderedSearches = savedSearches.map((search) => {
     return (
-      <li key={item.url} className='saved-card'>
-        <div onClick={() => handleClick(item)} className='text'>
-          <strong>{item.title}</strong>
+      <li key={search.url} className='saved-card'>
+        <div onClick={() => handleSearchClick(search)} className='text'>
+          <strong>{search.title}</strong>
           <div className='subtext'>
-            {item.time} • within {item.distance} miles
+            {search.time} • within {search.distance} miles
           </div>
         </div>
         <button
-          onClick={() => handleDelete(item)}
+          onClick={() => handleDeleteSearch(search)}
           className='delete-btn'
-          data-url={item.url}
+          data-url={search.url}
         >
           &times;
         </button>
@@ -68,7 +68,7 @@ function App() {
   return (
     <>
       {savedSearches.length > 0 ? (
-        <ul id='saved-list'>{list}</ul>
+        <ul id='saved-list'>{renderedSearches}</ul>
       ) : (
         <p>No saved searches</p>
       )}
