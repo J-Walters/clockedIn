@@ -1,3 +1,4 @@
+/*global chrome*/
 import { useState } from 'react';
 
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
@@ -25,6 +26,14 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     setShowForm(!showForm);
   };
 
+  const handleCopyLink = async () => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      lastFocusedWindow: true,
+    });
+    console.log(tab.url);
+  };
+
   return (
     <>
       {showForm ? (
@@ -50,7 +59,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
                 placeholder='Search URL'
                 required
               />
-              <button id='copy-button' type='button'>
+              <button id='copy-button' type='button' onClick={handleCopyLink}>
                 Copy From URL
               </button>
             </div>
