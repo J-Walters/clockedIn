@@ -4,27 +4,6 @@ import AddSearchForm from './components/AddSearchForm';
 import SavedSearchList from './components/SavedSearchList';
 import './components/index.css';
 
-const mockSavedSearches = [
-  {
-    title: 'Remote React Roles in NYC',
-    url: 'https://www.linkedin.com/jobs/search/?keywords=React&location=New%20York%20City&f_TPR=r3600',
-    time: 'Past hour',
-    distance: '50',
-  },
-  {
-    title: 'Product Design Roles – Remote',
-    url: 'https://www.linkedin.com/jobs/search/?keywords=Product%20Designer&f_TPR=r86400',
-    time: 'Past 24 hours',
-    distance: '25',
-  },
-  {
-    title: 'Frontend Internships',
-    url: 'https://www.linkedin.com/jobs/search/?keywords=Frontend%20Intern&f_TPR=r7200',
-    time: 'Past 2 hours',
-    distance: '25',
-  },
-];
-
 export default function App() {
   const [activeTab, setActiveTab] = useState('search');
   const [savedSearches, setSavedSearches] = useState(() =>
@@ -32,14 +11,10 @@ export default function App() {
   );
 
   useEffect(() => {
-    const existing = localStorage.getItem('savedSearches');
-    if (!existing) {
-      localStorage.setItem('savedSearches', JSON.stringify(mockSavedSearches));
-      setSavedSearches(mockSavedSearches);
+    const existingSearches = localStorage.getItem('savedSearches');
+    if (existingSearches) {
+      setSavedSearches(JSON.parse(existing));
     }
-    // Uncomment below to persist changes to savedSearches:
-    // localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
-    // }, [savedSearches]);
   }, []);
 
   return (
