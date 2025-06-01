@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [copied, setCopied] = useState(false);
   const [form, setFormData] = useState({
     title: '',
@@ -51,7 +51,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
 
   return (
     <>
-      {showForm ? (
+      {!showForm ? (
         <div className='add-new-wrapper'>
           <button onClick={handleShowForm} className='secondary-button'>
             Add New

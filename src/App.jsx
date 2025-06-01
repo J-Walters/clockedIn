@@ -13,7 +13,7 @@ export default function App() {
   useEffect(() => {
     const existingSearches = localStorage.getItem('savedSearches');
     if (existingSearches) {
-      setSavedSearches(JSON.parse(existing));
+      setSavedSearches(JSON.parse(existingSearches));
     }
   }, []);
 
