@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import LiveSearchForm from './components/LiveSearchForm';
 import AddSearchForm from './components/AddSearchForm';
 import SavedSearchList from './components/SavedSearchList';
 import './components/index.css';
@@ -68,7 +69,7 @@ export default function App() {
       </nav>
 
       <main>
-        {activeTab === 'search' && <h1>Im the search content</h1>}
+        {activeTab === 'search' && <LiveSearchForm />}
         {activeTab === 'saved' && (
           <>
             <AddSearchForm

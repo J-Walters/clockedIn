@@ -324,7 +324,7 @@ select {
 
 .input-with-button input {
   width: 100%;
-  padding: 10px 90px 10px 10px; /* add right padding for the button */
+  padding: 10px 90px 10px 10px; 
   font-size: 14px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
