@@ -1,6 +1,6 @@
-import SavedSearchList from './components/SavedSearchList';
-import AddSearchForm from './components/AddSearchForm';
 import { useState, useEffect } from 'react';
+import AddSearchForm from './components/AddSearchForm';
+import SavedSearchList from './components/SavedSearchList';
 import './components/index.css';
 
 const mockSavedSearches = [
@@ -24,9 +24,10 @@ const mockSavedSearches = [
   },
 ];
 
-function App() {
+export default function App() {
+  const [activeTab, setActiveTab] = useState('search');
   const [savedSearches, setSavedSearches] = useState(() =>
-    JSON.parse(localStorage.getItem('savedSearches') || [])
+    JSON.parse(localStorage.getItem('savedSearches') || '[]')
   );
 
   useEffect(() => {
@@ -35,23 +36,53 @@ function App() {
       localStorage.setItem('savedSearches', JSON.stringify(mockSavedSearches));
       setSavedSearches(mockSavedSearches);
     }
-    // comment in when done with mock data
+    // Uncomment below to persist changes to savedSearches:
     // localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
     // }, [savedSearches]);
   }, []);
 
   return (
-    <>
-      <AddSearchForm
-        savedSearches={savedSearches}
-        setSavedSearches={setSavedSearches}
-      />
-      <SavedSearchList
-        savedSearches={savedSearches}
-        setSavedSearches={setSavedSearches}
-      />
-    </>
+    <div className='container'>
+      <header>
+        <h1>ClockedIn</h1>
+      </header>
+      <nav className='tabs'>
+        <button
+          className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}
+          onClick={() => setActiveTab('search')}
+        >
+          Search
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'saved' ? 'active' : ''}`}
+          onClick={() => setActiveTab('saved')}
+        >
+          Saved
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+          onClick={() => setActiveTab('settings')}
+        >
+          Settings
+        </button>
+      </nav>
+
+      <main className='tab-panel'>
+        {activeTab === 'search' && <h1>Im the search content</h1>}
+        {activeTab === 'saved' && (
+          <>
+            <AddSearchForm
+              savedSearches={savedSearches}
+              setSavedSearches={setSavedSearches}
+            />
+            <SavedSearchList
+              savedSearches={savedSearches}
+              setSavedSearches={setSavedSearches}
+            />
+          </>
+        )}
+        {activeTab === 'settings' && <h1>I'm the settings content</h1>}
+      </main>
+    </div>
   );
 }
-
-export default App;
