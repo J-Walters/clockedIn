@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import LiveSearchForm from './components/LiveSearchForm';
 import AddSearchForm from './components/AddSearchForm';
 import SavedSearchList from './components/SavedSearchList';
+import Settings from './components/Settings';
 import './components/index.css';
 
 export default function App() {
@@ -65,7 +66,7 @@ export default function App() {
         )}
         {activeTab === 'settings' && (
           <section class='tab-panel'>
-            <h1>I'm the settings content</h1>
+            <Settings />
           </section>
         )}
       </main>
