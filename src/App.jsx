@@ -1,5 +1,4 @@
-import { mock } from 'node:test';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const mockSavedSearches = [
   {
@@ -23,7 +22,16 @@ const mockSavedSearches = [
 ];
 
 function App() {
-  const [savedSearches, setSavedSearches] = useState(mockSavedSearches);
+  const [savedSearches, setSavedSearches] = useState(() =>
+    JSON.parse(localStorage.getItem('savedSearches') || [])
+  );
+
+  useEffect(() => {
+    localStorage.setItem('savedSearches', JSON.stringify(mockSavedSearches));
+    // comment in when done with mock data
+    // localStorage.setItem('savedSearches', JSON.stringify(savedSearches));
+    // }, [savedSearches]);
+  }, []);
 
   const handleClick = (item) => {
     window.open(item.url, '_blank');
