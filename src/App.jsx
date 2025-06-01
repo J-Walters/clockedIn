@@ -67,11 +67,14 @@ export default function App() {
           Settings
         </button>
       </nav>
-
       <main>
-        {activeTab === 'search' && <LiveSearchForm />}
+        {activeTab === 'search' && (
+          <section class='tab-panel'>
+            <LiveSearchForm />
+          </section>
+        )}
         {activeTab === 'saved' && (
-          <>
+          <section class='tab-panel'>
             <AddSearchForm
               savedSearches={savedSearches}
               setSavedSearches={setSavedSearches}
@@ -80,9 +83,13 @@ export default function App() {
               savedSearches={savedSearches}
               setSavedSearches={setSavedSearches}
             />
-          </>
+          </section>
         )}
-        {activeTab === 'settings' && <h1>I'm the settings content</h1>}
+        {activeTab === 'settings' && (
+          <section class='tab-panel'>
+            <h1>I'm the settings content</h1>
+          </section>
+        )}
       </main>
     </div>
   );
