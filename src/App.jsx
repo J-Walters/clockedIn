@@ -1,4 +1,4 @@
-import SavedSearchList from './components/SavedSearchCard';
+import SavedSearchList from './components/SavedSearchList';
 
 function App() {
   return <SavedSearchList />;
