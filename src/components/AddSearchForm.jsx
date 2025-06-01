@@ -38,7 +38,6 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
 
     clearForm();
   };
-  ``;
 
   const handleCopyLink = async () => {
     const [tab] = await chrome.tabs.query({

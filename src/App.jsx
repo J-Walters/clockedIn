@@ -70,7 +70,10 @@ export default function App() {
       <main>
         {activeTab === 'search' && (
           <section class='tab-panel'>
-            <LiveSearchForm />
+            <LiveSearchForm
+              savedSearches={savedSearches}
+              setSavedSearches={setSavedSearches}
+            />
           </section>
         )}
         {activeTab === 'saved' && (
