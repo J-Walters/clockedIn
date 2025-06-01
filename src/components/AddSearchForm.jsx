@@ -1,39 +1,40 @@
 import { useState } from 'react';
 
-export default function AddNewSearch() {
-  const [visible, setVisible] = useState(true);
-  const [savedSearches, setSavedSearches] = useState(() =>
-    JSON.parse(localStorage.getItem('savedSearches') || [])
-  );
+export default function AddNewSearch({ savedSearches, setSavedSearches }) {
+  const [showForm, setShowForm] = useState(true);
 
-  const handleClick = () => {
-    setVisible(!visible);
+  const handleShowForm = () => {
+    setShowForm(!showForm);
   };
 
-  const formAction = (formData) => {
-    console.log(formData.get('title'));
-    const title = formData.get('title');
-    const url = formData.get('url');
-    const time = formData.get('time');
-    const distance = formData.get('distance');
+  const handleSavedSearch = (formData) => {
+    const newSearch = {
+      title: formData.get('title'),
+      url: formData.get('url'),
+      time: formData.get('time'),
+      distance: formData.get('distance'),
+    };
 
-    const newSearchObject = { title, url, time, distance };
-    const updated = [...savedSearches, newSearchObject];
-    localStorage.setItem('savedSearches', JSON.stringify(updated));
+    const updatedSearch = [...savedSearches, newSearch];
+    localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
 
-    setVisible(!visible);
+    setSavedSearches((prev) => {
+      return [...prev, newSearch];
+    });
+
+    setShowForm(!showForm);
   };
 
   return (
     <>
-      {visible ? (
+      {showForm ? (
         <div className='add-new-wrapper'>
-          <button onClick={handleClick} className='secondary-button'>
+          <button onClick={handleShowForm} className='secondary-button'>
             Add New
           </button>
         </div>
       ) : (
-        <form action={formAction}>
+        <form action={handleSavedSearch}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <input
               type='text'
@@ -41,7 +42,7 @@ export default function AddNewSearch() {
               placeholder='Search Title'
               required
             />
-            <div class='input-with-button'>
+            <div className='input-with-button'>
               <input
                 id='url-input'
                 type='url'
@@ -67,7 +68,7 @@ export default function AddNewSearch() {
               name='distance'
               placeholder='Distance (miles)'
             />
-            <button type='submit' class='search-button'>
+            <button type='submit' className='search-button'>
               Save
             </button>
           </div>
