@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import SavedSearchCard from './SavedSearchCard';
+import './index.css';
 
 const mockSavedSearches = [
   {
