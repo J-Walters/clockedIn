@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import LiveSearchForm from './components/LiveSearchForm';
 import AddSearchForm from './components/AddSearchForm';
 import SavedSearchList from './components/SavedSearchList';
-import Settings from './components/Settings';
+import Settings from './components/Settings/Settings';
 import './components/index.css';
 
 import supabase from './supabase-client';
