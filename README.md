@@ -35,10 +35,11 @@ I built ClockedIn to:
 
 ### 🛠 Tech Stack
 
-- HTML, CSS, JavaScript (Vanilla)
+- HTML, CSS, JavaScript
 - Chrome Extension API 
-- Font Awesome for icons
-- Minimal dependencies, zero build tools
+- React
+- Supabase
+  
 
 ---
 
