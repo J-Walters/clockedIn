@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# React + Vite
-=======
 # ClockedIn – Smarter LinkedIn Job Search
 
 ClockedIn is a minimal, focused Chrome extension that enhances the job-seeking experience on LinkedIn by giving users finer control over job search filters, especially recency, which LinkedIn buries deep in its UI (or doesn't expose fully at all).
@@ -65,15 +62,4 @@ Built by [Jordan Walters](https://github.com/J-Walters) — because LinkedIn’s
 If you’ve figured out other LinkedIn parameter hacks or UX improvements, I’d love to hear them.
 
 ---
->>>>>>> b706695fdef4215b3ff5b129f3ee2f18ed05d44c
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
