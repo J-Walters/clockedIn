@@ -8,6 +8,7 @@ import './components/index.css';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('search');
+  const [signedIn, setSignedIn] = useState(false);
   const [savedSearches, setSavedSearches] = useState(() =>
     JSON.parse(localStorage.getItem('savedSearches') || '[]')
   );
@@ -21,7 +22,7 @@ export default function App() {
 
   return (
     <div className='container'>
-      <Header />
+      <Header signIn={signedIn} />
       <nav className='tabs'>
         <button
           className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}

@@ -1,9 +1,8 @@
 /*global chrome*/
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import supabase from '../../supabase-client';
 
 export default function Login() {
-  const [signedIn, setSignedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [form, setForm] = useState({
     email: '',
@@ -16,6 +15,23 @@ export default function Login() {
       password: '',
     });
   };
+
+  async function signUpNewUser() {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: 'j_dubya@icloud.com',
+        password: 'example-password123',
+      });
+
+      console.log('signedupusers', data);
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error(`Sign Up ${error}`);
+    }
+  }
 
   //email, password sign in
   const signIn = async (formData) => {
@@ -109,7 +125,7 @@ export default function Login() {
             placeholder='email@email.com'
             autoFocus
             required
-            autoComplete='username'
+            autocomplete='username'
             onChange={(e) =>
               setForm((prev) => ({ ...prev, email: e.target.value }))
             }
@@ -121,7 +137,7 @@ export default function Login() {
             value={form.password}
             placeholder='password'
             required
-            autoComplete='password'
+            autocomplete='password'
             onChange={(e) =>
               setForm((prev) => ({ ...prev, password: e.target.value }))
             }
@@ -130,16 +146,9 @@ export default function Login() {
           <p>or</p>
           <button onClick={handleGoogleSignIn}>sign in with google</button>
           <p>don't have an account?</p>
-          <p>create one</p>
+          <button onClick={signUpNewUser}>create one</button>
         </div>
       )}
     </>
   );
 }
-
-// <button onClick={signIn}>SIGN IN BUTTON</button>
-// {/* {signedIn ? (
-//   <>
-//     <p>Hello, Jordan</p>
-//   </>
-// ) : (
