@@ -1,3 +1,4 @@
+/*global chrome*/
 import { useState, useEffect } from 'react';
 import LiveSearchForm from './components/LiveSearchForm';
 import AddSearchForm from './components/AddSearchForm';
@@ -5,11 +6,70 @@ import SavedSearchList from './components/SavedSearchList';
 import Settings from './components/Settings';
 import './components/index.css';
 
+import supabase from './supabase-client';
+
 export default function App() {
   const [activeTab, setActiveTab] = useState('search');
   const [savedSearches, setSavedSearches] = useState(() =>
     JSON.parse(localStorage.getItem('savedSearches') || '[]')
   );
+  const [signedIn, setSigned] = useState(true);
+
+  const handleGoogleSignIn = async () => {
+    const manifest = chrome.runtime.getManifest();
+    const redirectUri = `https://${chrome.runtime.id}.chromiumapp.org`;
+
+    const url = new URL('https://accounts.google.com/o/oauth2/auth');
+    url.searchParams.set('client_id', manifest.oauth2.client_id);
+    url.searchParams.set('response_type', 'id_token');
+    url.searchParams.set('access_type', 'offline');
+    url.searchParams.set('redirect_uri', redirectUri);
+    url.searchParams.set('scope', manifest.oauth2.scopes.join(' '));
+    // url.searchParams.set('nonce', Math.random().toString(36).substring(2));
+
+    chrome.identity.launchWebAuthFlow(
+      {
+        url: url.href,
+        interactive: true,
+      },
+      async (redirectedTo) => {
+        if (chrome.runtime.lastError || !redirectedTo) {
+          console.error('OAuth failed:', chrome.runtime.lastError);
+          return;
+        }
+
+        try {
+          const finalUrl = new URL(redirectedTo);
+          const params = new URLSearchParams(finalUrl.hash.substring(1));
+          const idToken = params.get('id_token');
+
+          if (!idToken) {
+            throw new Error('ID token not found');
+          }
+
+          const { data, error } = await supabase.auth.signInWithIdToken({
+            provider: 'google',
+            token: idToken,
+          });
+
+          if (error) {
+            console.error('Supabase login error:', error);
+          } else {
+            console.log('✅ Logged in user:', data.user);
+
+            setSigned(true);
+          }
+        } catch (err) {
+          console.error('Sign-in flow error:', err);
+        }
+      }
+    );
+  };
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    setSigned(false);
+  };
 
   useEffect(() => {
     const existingSearches = localStorage.getItem('savedSearches');
@@ -21,6 +81,14 @@ export default function App() {
   return (
     <div className='container'>
       <header>
+        {signedIn ? (
+          <>
+            <button onClick={handleSignOut}>Sign Out</button>
+            <p>Hello, Jordan</p>
+          </>
+        ) : (
+          <button onClick={handleGoogleSignIn}>Sign In</button>
+        )}
         <h1>ClockedIn</h1>
       </header>
       <nav className='tabs'>

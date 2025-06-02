@@ -14,8 +14,13 @@
     "alarms",
     "notifications",
     "storage",
-    "tabs"
+    "tabs",
+    "identity"
   ],
+    "oauth2": {
+    "client_id": "62030700716-sa7aisjquqqvf3cp0r49qcpngq56s53h.apps.googleusercontent.com",
+    "scopes": ["openid", "email", "profile"]
+  },
   "host_permissions": [
     "http://*/*",
     "https://*/*"
