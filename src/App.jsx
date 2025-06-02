@@ -1,8 +1,8 @@
 /*global chrome*/
 import { useState, useEffect } from 'react';
-import LiveSearchForm from './components/LiveSearchForm';
 import Settings from './components/Settings/Settings';
-import Saved from './components/Saved/index';
+import Saved from './components/Saved/Saved';
+import Search from './components/Search/Search';
 import './components/index.css';
 
 import supabase from './supabase-client';
@@ -107,7 +107,7 @@ export default function App() {
       <main>
         {activeTab === 'search' && (
           <section class='tab-panel'>
-            <LiveSearchForm
+            <Search
               savedSearches={savedSearches}
               setSavedSearches={setSavedSearches}
             />
