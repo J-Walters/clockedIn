@@ -1,10 +1,11 @@
 /*global chrome*/
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Bell, Export } from 'phosphor-react';
 
-export default function Setting() {
+export default function Setting({ savedSearches }) {
   const [enabled, setEnabled] = useState(false);
   const [frequency, setFrequency] = useState('');
+  const linkRef = useRef(null);
 
   useEffect(() => {
     chrome.storage.local.get(['inputKey'], (result) => {
@@ -35,6 +36,30 @@ export default function Setting() {
       }
     );
   }
+
+  //export csv helper
+  function convertToCSV(data) {
+    if (!data.length) return '';
+
+    const keys = Object.keys(data[0]);
+    const header = keys.join(',');
+
+    const rows = data.map((row) =>
+      keys.map((key) => `"${row[key] ?? ''}"`).join(',')
+    );
+
+    return [header, ...rows].join('\n');
+  }
+
+  const handleExport = () => {
+    const csvData = convertToCSV(savedSearches);
+    const csvBlob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(csvBlob);
+
+    linkRef.current.href = url;
+    linkRef.current.download = 'Job Search Data.csv';
+    linkRef.current.click();
+  };
 
   return (
     <div className='settings-group'>
@@ -79,9 +104,13 @@ export default function Setting() {
         />
         <label htmlFor='enabled-checkbox'>Enabled</label>
       </div>
-
       <strong className='section-title'>Saved Searches</strong>
-      <a id='export-anchor' className='secondary-button'>
+      <a
+        ref={linkRef}
+        onClick={handleExport}
+        className='secondary-button'
+        style={{ cursor: 'pointer' }}
+      >
         <Export size={16} color='#874a21' />
         Export saved searches
       </a>

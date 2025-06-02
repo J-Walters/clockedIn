@@ -134,7 +134,7 @@ export default function App() {
         )}
         {activeTab === 'settings' && (
           <section class='tab-panel'>
-            <Settings />
+            <Settings savedSearches={savedSearches} />
           </section>
         )}
       </main>
