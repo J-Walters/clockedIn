@@ -27,7 +27,6 @@ export default function ExportCSV({ savedSearches }) {
   return (
     <>
       <strong className='section-title'>Saved Searches</strong>
-      <strong className='section-title'>Saved Searches</strong>
       <button onClick={handleExport} className='secondary-button'>
         <Export size={16} color='#874a21' />
         Export saved searches

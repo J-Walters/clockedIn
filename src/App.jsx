@@ -13,7 +13,7 @@ export default function App() {
   const [savedSearches, setSavedSearches] = useState(() =>
     JSON.parse(localStorage.getItem('savedSearches') || '[]')
   );
-  const [signedIn, setSigned] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
 
   const handleGoogleSignIn = async () => {
     const manifest = chrome.runtime.getManifest();
@@ -57,18 +57,13 @@ export default function App() {
           } else {
             console.log('✅ Logged in user:', data.user);
 
-            setSigned(true);
+            setSignedIn(true);
           }
         } catch (err) {
           console.error('Sign-in flow error:', err);
         }
       }
     );
-  };
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    setSigned(false);
   };
 
   useEffect(() => {
@@ -83,7 +78,6 @@ export default function App() {
       <header>
         {signedIn ? (
           <>
-            <button onClick={handleSignOut}>Sign Out</button>
             <p>Hello, Jordan</p>
           </>
         ) : (
@@ -134,7 +128,7 @@ export default function App() {
         )}
         {activeTab === 'settings' && (
           <section class='tab-panel'>
-            <Settings savedSearches={savedSearches} />
+            <Settings savedSearches={savedSearches} setSignedIn={setSignedIn} />
           </section>
         )}
       </main>
