@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <div className='container'>
-      <Header signIn={signedIn} />
+      <Header signedIn={signedIn} setSignedIn={setSignedIn} />
       <nav className='tabs'>
         <button
           className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}
