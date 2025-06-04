@@ -125,6 +125,7 @@ export default function Login({ setSignedIn, closeModal }) {
           value={form.email}
           autoComplete='username'
           required
+          autoFocus
           onChange={(e) =>
             setForm((prev) => ({ ...prev, email: e.target.value }))
           }
@@ -143,27 +144,43 @@ export default function Login({ setSignedIn, closeModal }) {
           }
         />
 
-        <button type='submit'>
+        <button type='submit' className='search-button'>
           {mode === 'signin' ? 'Sign In with Email' : 'Create Account'}
         </button>
 
-        <p>or</p>
+        <p style={{ textAlign: 'center', margin: '6px 0' }}>or</p>
 
-        <button type='button' onClick={handleGoogleSignIn}>
+        <button
+          type='button'
+          onClick={handleGoogleSignIn}
+          className='secondary-button'
+        >
           Sign in with Google
         </button>
 
         {mode === 'signin' ? (
           <>
-            <p>Don't have an account?</p>
-            <button type='button' onClick={() => setMode('signup')}>
+            <p style={{ fontSize: '13px', textAlign: 'center' }}>
+              Don't have an account?
+            </p>
+            <button
+              type='button'
+              onClick={() => setMode('signup')}
+              className='cancel-button'
+            >
               Create one
             </button>
           </>
         ) : (
           <>
-            <p>Already have an account?</p>
-            <button type='button' onClick={() => setMode('signin')}>
+            <p style={{ fontSize: '13px', textAlign: 'center' }}>
+              Already have an account?
+            </p>
+            <button
+              type='button'
+              onClick={() => setMode('signin')}
+              className='cancel-button'
+            >
               Sign In
             </button>
           </>
