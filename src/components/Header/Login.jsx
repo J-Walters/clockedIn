@@ -2,10 +2,9 @@
 import { useState } from 'react';
 import supabase from '../../supabase-client';
 
-export default function Login({ setSignedIn }) {
+export default function Login({ setSignedIn, closeModal }) {
   const [mode, setMode] = useState('signin');
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [userName, setUserName] = useState('');
+  // const [userName, setUserName] = useState('');
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -13,7 +12,6 @@ export default function Login({ setSignedIn }) {
 
   const clearForm = () => {
     setForm({ email: '', password: '' });
-    setShowLoginForm(false);
     setMode('signin');
   };
 
@@ -29,8 +27,8 @@ export default function Login({ setSignedIn }) {
 
       if (data.user) {
         setSignedIn(true);
-        setUserName('Hello', userName);
         clearForm();
+        closeModal();
       }
     } catch (err) {
       console.error('Sign In Error', err);
@@ -105,6 +103,7 @@ export default function Login({ setSignedIn }) {
             console.log('✅ Logged in user:', data.user);
             setSignedIn(true);
             clearForm();
+            closeModal();
           }
         } catch (err) {
           console.error('Sign-in flow error:', err);
@@ -115,71 +114,61 @@ export default function Login({ setSignedIn }) {
 
   return (
     <>
-      {!showLoginForm ? (
-        <>
-          {!userName ? (
-            <button onClick={() => setShowLoginForm(true)}>Sign In</button>
-          ) : (
-            <p>{userName}</p>
-          )}
-        </>
-      ) : (
-        <form onSubmit={handleAuth}>
-          <h1>{mode === 'signin' ? 'Sign In' : 'Create Account'}</h1>
+      <form onSubmit={handleAuth}>
+        <h1>{mode === 'signin' ? 'Sign In' : 'Create Account'}</h1>
 
-          <label htmlFor='email'>Email</label>
-          <input
-            id='email'
-            name='email'
-            type='email'
-            value={form.email}
-            autoComplete='username'
-            required
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, email: e.target.value }))
-            }
-          />
+        <label htmlFor='email'>Email</label>
+        <input
+          id='email'
+          name='email'
+          type='email'
+          value={form.email}
+          autoComplete='username'
+          required
+          onChange={(e) =>
+            setForm((prev) => ({ ...prev, email: e.target.value }))
+          }
+        />
 
-          <label htmlFor='password'>Password</label>
-          <input
-            id='password'
-            name='password'
-            type='password'
-            value={form.password}
-            autoComplete='current-password'
-            required
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, password: e.target.value }))
-            }
-          />
+        <label htmlFor='password'>Password</label>
+        <input
+          id='password'
+          name='password'
+          type='password'
+          value={form.password}
+          autoComplete='current-password'
+          required
+          onChange={(e) =>
+            setForm((prev) => ({ ...prev, password: e.target.value }))
+          }
+        />
 
-          <button type='submit'>
-            {mode === 'signin' ? 'Sign In with Email' : 'Create Account'}
-          </button>
+        <button type='submit'>
+          {mode === 'signin' ? 'Sign In with Email' : 'Create Account'}
+        </button>
 
-          <p>or</p>
+        <p>or</p>
 
-          <button type='button' onClick={handleGoogleSignIn}>
-            Sign in with Google
-          </button>
+        <button type='button' onClick={handleGoogleSignIn}>
+          Sign in with Google
+        </button>
 
-          {mode === 'signin' ? (
-            <>
-              <p>Don't have an account?</p>
-              <button type='button' onClick={() => setMode('signup')}>
-                Create one
-              </button>
-            </>
-          ) : (
-            <>
-              <p>Already have an account?</p>
-              <button type='button' onClick={() => setMode('signin')}>
-                Sign In
-              </button>
-            </>
-          )}
-        </form>
-      )}
+        {mode === 'signin' ? (
+          <>
+            <p>Don't have an account?</p>
+            <button type='button' onClick={() => setMode('signup')}>
+              Create one
+            </button>
+          </>
+        ) : (
+          <>
+            <p>Already have an account?</p>
+            <button type='button' onClick={() => setMode('signin')}>
+              Sign In
+            </button>
+          </>
+        )}
+      </form>
     </>
   );
 }
