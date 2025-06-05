@@ -5,13 +5,19 @@ export default function SavedSearchCard({
   handleSearchClick,
   handleDeleteSearch,
 }) {
+  const showSubtext = search.time || search.distance;
+
   return (
     <li className='saved-card'>
       <div onClick={() => handleSearchClick(search)} className='text'>
         <strong>{search.title}</strong>
-        <div className='subtext'>
-          {search.time} • within {search.distance} miles
-        </div>
+        {showSubtext && (
+          <div className='subtext'>
+            {search.time}
+            {search.time && search.distance ? ' • ' : ''}
+            {search.distance ? `within ${search.distance} miles` : ''}
+          </div>
+        )}
       </div>
       <button
         onClick={() => handleDeleteSearch(search)}

@@ -1,24 +1,41 @@
+import { useAuth } from '../../context/AuthContext';
+import supabase from '../../supabase-client';
 import SavedSearchCard from './SavedSearchCard';
 
 export default function SavedSearchList({ savedSearches, setSavedSearches }) {
+  const { user } = useAuth();
+
   const handleSearchClick = (search) => {
     window.open(search.url, '_blank');
   };
 
-  // will need to update with ids eventually
-  const handleDeleteSearch = (searchToDelete) => {
+  const handleDeleteSearch = async (searchToDelete) => {
     const updatedSearches = savedSearches.filter(
-      (search) => search.url !== searchToDelete.url
+      (search) => search.id !== searchToDelete.id
     );
 
     setSavedSearches(updatedSearches);
-    localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
+
+    if (user) {
+      // Delete from Supabase
+      const { error } = await supabase
+        .from('saved_searches')
+        .delete()
+        .eq('id', searchToDelete.id);
+
+      if (error) {
+        console.error('Failed to delete from Supabase:', error.message);
+      }
+    } else {
+      // Update localStorage for guest users
+      localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
+    }
   };
 
-  const renderedSearches = savedSearches.map((search) => {
+  const renderedSearches = savedSearches.reverse().map((search) => {
     return (
       <SavedSearchCard
-        key={search.url}
+        key={search.id}
         search={search}
         handleSearchClick={handleSearchClick}
         handleDeleteSearch={handleDeleteSearch}

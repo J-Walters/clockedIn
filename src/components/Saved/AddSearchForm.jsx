@@ -1,7 +1,10 @@
 /*global chrome*/
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import supabase from '../../supabase-client';
 
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
+  const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [copied, setCopied] = useState(false);
   const [form, setFormData] = useState({
@@ -26,15 +29,48 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     setShowForm(!showForm);
   };
 
-  const handleSavedSearch = () => {
-    const newSearch = { ...form };
+  //for non user logic
+  // const handleSavedSearch = () => {
+  //   const newSearch = { ...form };
 
-    const updatedSearch = [...savedSearches, newSearch];
-    localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
+  //   const updatedSearch = [...savedSearches, newSearch];
+  //   localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
 
-    setSavedSearches((prev) => {
-      return [...prev, newSearch];
-    });
+  //   setSavedSearches((prev) => {
+  //     return [...prev, newSearch];
+  //   });
+
+  //   clearForm();
+  // };
+
+  const handleSavedSearch = async (e) => {
+    e.preventDefault();
+
+    const newSearch = {
+      title: form.title,
+      url: form.url,
+      time: form.time,
+      distance: form.distance,
+    };
+
+    if (user) {
+      // Save to Supabase for signed-in user
+      const { data, error } = await supabase
+        .from('saved_searches')
+        .insert([{ ...newSearch, user_id: user.id }]);
+
+      if (error) {
+        console.error('Error saving search:', error.message, error.details);
+        return;
+      }
+
+      setSavedSearches((prev) => [...prev, data[0]]);
+    } else {
+      // Save to localStorage for guest
+      const updated = [...savedSearches, newSearch];
+      localStorage.setItem('savedSearches', JSON.stringify(updated));
+      setSavedSearches(updated);
+    }
 
     clearForm();
   };
@@ -58,7 +94,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
           </button>
         </div>
       ) : (
-        <form action={handleSavedSearch}>
+        <form onSubmit={(e) => handleSavedSearch(e)}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <input
               type='text'
