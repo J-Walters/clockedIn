@@ -5,24 +5,42 @@ import Settings from './components/Settings/Settings';
 import Saved from './components/Saved/Saved';
 import Search from './components/Search/Search';
 import Header from './components/Header/Header';
+import supabase from './supabase-client';
 import './components/index.css';
 
 export default function App() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('search');
-
   const [savedSearches, setSavedSearches] = useState([]);
 
+  async function fetchSavedSearches(user) {
+    const { data, error } = await supabase
+      .from('saved_searches')
+      .select('*')
+      .eq('user_id', user.id);
+
+    if (error) {
+      console.error('Failed to fetch saved searches:', error);
+      return [];
+    }
+
+    return data;
+  }
+
   useEffect(() => {
-    if (user) {
-      // TODO: fetch from Supabase
-      console.log('Logged in as:', user.email);
-    } else {
-      const existing = localStorage.getItem('savedSearches');
-      if (existing) {
-        setSavedSearches(JSON.parse(existing));
+    async function loadSavedSearches() {
+      if (user) {
+        const data = await fetchSavedSearches(user);
+        setSavedSearches(data);
+      } else {
+        const existing = localStorage.getItem('savedSearches');
+        if (existing) {
+          setSavedSearches(JSON.parse(existing));
+        }
       }
     }
+
+    loadSavedSearches();
   }, [user]);
 
   return (
