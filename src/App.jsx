@@ -1,5 +1,6 @@
 // /*global chrome*/
 import { useState, useEffect } from 'react';
+import { useAuth } from './context/AuthContext';
 import Settings from './components/Settings/Settings';
 import Saved from './components/Saved/Saved';
 import Search from './components/Search/Search';
@@ -7,22 +8,26 @@ import Header from './components/Header/Header';
 import './components/index.css';
 
 export default function App() {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('search');
-  const [signedIn, setSignedIn] = useState(false);
-  const [savedSearches, setSavedSearches] = useState(() =>
-    JSON.parse(localStorage.getItem('savedSearches') || '[]')
-  );
+
+  const [savedSearches, setSavedSearches] = useState([]);
 
   useEffect(() => {
-    const existingSearches = localStorage.getItem('savedSearches');
-    if (existingSearches) {
-      setSavedSearches(JSON.parse(existingSearches));
+    if (user) {
+      // TODO: fetch from Supabase
+      console.log('Logged in as:', user.email);
+    } else {
+      const existing = localStorage.getItem('savedSearches');
+      if (existing) {
+        setSavedSearches(JSON.parse(existing));
+      }
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className='container'>
-      <Header signedIn={signedIn} setSignedIn={setSignedIn} />
+      <Header />
       <nav className='tabs'>
         <button
           className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}
@@ -62,7 +67,7 @@ export default function App() {
         )}
         {activeTab === 'settings' && (
           <section class='tab-panel'>
-            <Settings savedSearches={savedSearches} setSignedIn={setSignedIn} />
+            <Settings savedSearches={savedSearches} />
           </section>
         )}
       </main>

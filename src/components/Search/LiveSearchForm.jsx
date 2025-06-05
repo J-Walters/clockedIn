@@ -11,7 +11,6 @@ function decodeTimeFrame(value) {
 }
 
 export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
-  const [signedIn, setSignedIn] = useState(false);
   const [form, setFormData] = useState({
     title: '',
     time: 'r1800',

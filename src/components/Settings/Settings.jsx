@@ -2,10 +2,10 @@ import Notfications from './Notifications';
 import ExportCSV from './ExportCSV';
 import Profile from './Profile';
 
-export default function Setting({ savedSearches, setSignedIn }) {
+export default function Setting({ savedSearches }) {
   return (
     <div className='settings-group'>
-      <Profile setSignedIn={setSignedIn} />
+      <Profile />
       <Notfications />
       <ExportCSV savedSearches={savedSearches} />
     </div>

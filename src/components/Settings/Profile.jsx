@@ -1,16 +1,12 @@
-import supabase from '../../supabase-client';
+import { useAuth } from '../../context/AuthContext';
 
-export default function Profile({ setSignedIn }) {
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    try {
-      if (!error) {
-        setSignedIn(false);
-      }
-    } catch (error) {
-      console.error(`Sign out error: ${error}`);
-    }
+export default function Profile() {
+  const { signOut } = useAuth();
+
+  const handleSignOut = () => {
+    signOut();
   };
+
   return (
     <>
       <strong className='section-title'>Profile</strong>
