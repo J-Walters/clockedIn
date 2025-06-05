@@ -1,4 +1,3 @@
-// /*global chrome*/
 import { useState, useEffect } from 'react';
 import { useAuth } from './context/AuthContext';
 import Settings from './components/Settings/Settings';
@@ -33,6 +32,7 @@ export default function App() {
         const data = await fetchSavedSearches(user);
         setSavedSearches(data);
       } else {
+        setSavedSearches([]);
         const existing = localStorage.getItem('savedSearches');
         if (existing) {
           setSavedSearches(JSON.parse(existing));
