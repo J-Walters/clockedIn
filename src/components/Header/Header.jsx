@@ -7,7 +7,12 @@ export default function Header({ signedIn, setSignedIn }) {
 
   return (
     <header>
-      {!signedIn && <button onClick={() => setShowLogin(true)}>Sign In</button>}
+      {!signedIn && (
+        <button onClick={() => setShowLogin(true)} className='signin-button'>
+          Sign In
+        </button>
+      )}
+      <h1>ClockedIn</h1>
       {showLogin && (
         <Modal onClose={() => setShowLogin(false)}>
           <Login
@@ -16,8 +21,6 @@ export default function Header({ signedIn, setSignedIn }) {
           />
         </Modal>
       )}
-
-      <h1>ClockedIn</h1>
     </header>
   );
 }

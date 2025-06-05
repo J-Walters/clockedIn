@@ -1,115 +1,41 @@
-/* global chrome */
 import { useState } from 'react';
-import supabase from '../../supabase-client';
+import { useAuth } from '../../context/AuthContext';
 
-export default function Login({ setSignedIn, closeModal }) {
+export default function Login({ closeModal }) {
+  const { signInWithEmail, signUpWithEmail, signInWithGoogle } = useAuth();
   const [mode, setMode] = useState('signin');
-  // const [userName, setUserName] = useState('');
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+  const [form, setForm] = useState({ email: '', password: '' });
 
   const clearForm = () => {
     setForm({ email: '', password: '' });
     setMode('signin');
   };
 
-  async function signInWithEmail() {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: form.email,
-        password: form.password,
-      });
-
-      console.log('Sign In data:', data);
-      if (error) throw error;
-
-      if (data.user) {
-        setSignedIn(true);
-        clearForm();
-        closeModal();
-      }
-    } catch (err) {
-      console.error('Sign In Error', err);
-    }
-  }
-
-  async function signUpNewUser() {
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email: form.email,
-        password: form.password,
-      });
-
-      console.log('Sign Up data:', data);
-      if (error) throw error;
-
-      clearForm();
-      setMode('signin');
-    } catch (err) {
-      console.error('Sign Up Error', err);
-    }
-  }
-
-  const handleAuth = (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
-
-    if (mode === 'signin') {
-      signInWithEmail();
-    } else {
-      signUpNewUser();
+    try {
+      if (mode === 'signin') {
+        await signInWithEmail(form.email, form.password);
+      } else {
+        await signUpWithEmail(form.email, form.password);
+        setMode('signin');
+        return;
+      }
+      clearForm();
+      closeModal();
+    } catch (err) {
+      console.error(`${mode} error:`, err.message);
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    const manifest = chrome.runtime.getManifest();
-    const redirectUri = `https://${chrome.runtime.id}.chromiumapp.org`;
-    const url = new URL('https://accounts.google.com/o/oauth2/auth');
-    url.searchParams.set('client_id', manifest.oauth2.client_id);
-    url.searchParams.set('response_type', 'id_token');
-    url.searchParams.set('access_type', 'offline');
-    url.searchParams.set('redirect_uri', redirectUri);
-    url.searchParams.set('scope', manifest.oauth2.scopes.join(' '));
-
-    chrome.identity.launchWebAuthFlow(
-      {
-        url: url.href,
-        interactive: true,
-      },
-      async (redirectedTo) => {
-        if (chrome.runtime.lastError || !redirectedTo) {
-          console.error('OAuth failed:', chrome.runtime.lastError);
-          return;
-        }
-
-        try {
-          const finalUrl = new URL(redirectedTo);
-          const params = new URLSearchParams(finalUrl.hash.substring(1));
-          const idToken = params.get('id_token');
-
-          if (!idToken) {
-            throw new Error('ID token not found');
-          }
-
-          const { data, error } = await supabase.auth.signInWithIdToken({
-            provider: 'google',
-            token: idToken,
-          });
-
-          if (error) {
-            console.error('Supabase login error:', error);
-          } else {
-            console.log('✅ Logged in user:', data.user);
-            setSignedIn(true);
-            clearForm();
-            closeModal();
-          }
-        } catch (err) {
-          console.error('Sign-in flow error:', err);
-        }
-      }
-    );
+  const handleGoogle = async () => {
+    try {
+      await signInWithGoogle();
+      clearForm();
+      closeModal();
+    } catch (err) {
+      console.error('Google sign-in error:', err.message);
+    }
   };
 
   return (
@@ -144,47 +70,33 @@ export default function Login({ setSignedIn, closeModal }) {
           }
         />
 
-        <button type='submit' className='search-button'>
-          {mode === 'signin' ? 'Sign In with Email' : 'Create Account'}
+        <button className='search-button' type='submit'>
+          {mode === 'signin' ? 'Sign In' : 'Create Account'}
         </button>
 
-        <p style={{ textAlign: 'center', margin: '6px 0' }}>or</p>
+        <p style={{ textAlign: 'center' }}>or</p>
 
         <button
-          type='button'
-          onClick={handleGoogleSignIn}
           className='secondary-button'
+          onClick={handleGoogle}
+          type='button'
         >
           Sign in with Google
         </button>
 
-        {mode === 'signin' ? (
-          <>
-            <p style={{ fontSize: '13px', textAlign: 'center' }}>
-              Don't have an account?
-            </p>
-            <button
-              type='button'
-              onClick={() => setMode('signup')}
-              className='cancel-button'
-            >
-              Create one
-            </button>
-          </>
-        ) : (
-          <>
-            <p style={{ fontSize: '13px', textAlign: 'center' }}>
-              Already have an account?
-            </p>
-            <button
-              type='button'
-              onClick={() => setMode('signin')}
-              className='cancel-button'
-            >
-              Sign In
-            </button>
-          </>
-        )}
+        <p style={{ textAlign: 'center', fontSize: '13px' }}>
+          {mode === 'signin'
+            ? "Don't have an account?"
+            : 'Already have an account?'}
+        </p>
+
+        <button
+          className='cancel-button'
+          type='button'
+          onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
+        >
+          {mode === 'signin' ? 'Create one' : 'Sign In'}
+        </button>
       </form>
     </>
   );

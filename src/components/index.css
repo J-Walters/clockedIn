@@ -406,3 +406,26 @@ select {
   }
 }
 
+.signin-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  color: #874a21;
+  border: 1px solid #e2cfc3;
+  margin-top: 8px;
+  margin-right: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  background-color: #fdf6ed;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.signin-button:hover {
+  background-color: #f9ece3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
