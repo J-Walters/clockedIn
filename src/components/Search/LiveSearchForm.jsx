@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import supabase from '../../supabase-client';
 
 function decodeTimeFrame(value) {
   const map = {
@@ -11,6 +13,7 @@ function decodeTimeFrame(value) {
 }
 
 export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
+  const { user } = useAuth();
   const [form, setFormData] = useState({
     title: '',
     time: 'r1800',
@@ -28,7 +31,7 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
     return `${base}?${params.toString()}`;
   }
 
-  const handleLiveSearch = (e) => {
+  const handleLiveSearch = async (e) => {
     e.preventDefault();
 
     const searchUrl = buildLinkedInSearchUrl(form);
@@ -40,11 +43,23 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
       url: searchUrl,
     };
 
-    const updatedSearch = [...savedSearches, searchEntry];
-    localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
-    setSavedSearches(updatedSearch);
+    if (user) {
+      const { data, error } = await supabase
+        .from('saved_searches')
+        .insert([{ ...searchEntry, user_id: user.id }]);
 
-    window.open(searchUrl, '_blank');
+      if (error) {
+        console.error('Error completing search', error.message, error.details);
+        return;
+      }
+      window.open(searchUrl, '_blank');
+
+      setSavedSearches((prev) => [...prev, data[0]]);
+    } else {
+      const updatedSearch = [...savedSearches, searchEntry];
+      localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
+      setSavedSearches(updatedSearch);
+    }
 
     setFormData({
       title: '',
