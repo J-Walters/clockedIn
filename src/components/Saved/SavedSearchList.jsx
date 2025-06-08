@@ -30,13 +30,19 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
     }
   };
 
-  const renderedSearches = savedSearches.reverse().map((search) => {
+  const renderedSearches = [...savedSearches].reverse().map((search) => {
     return (
       <SavedSearchCard
         key={search.id}
         search={search}
         handleSearchClick={handleSearchClick}
         handleDeleteSearch={handleDeleteSearch}
+        onSave={(updated) =>
+          setSavedSearches((prev) => {
+            const withoutOld = prev.filter((item) => item.id !== updated.id);
+            return [...withoutOld, updated];
+          })
+        }
       />
     );
   });
