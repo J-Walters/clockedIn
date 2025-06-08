@@ -17,7 +17,6 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
     setSavedSearches(updatedSearches);
 
     if (user) {
-      // Delete from Supabase
       const { error } = await supabase
         .from('saved_searches')
         .delete()
@@ -27,7 +26,6 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
         console.error('Failed to delete from Supabase:', error.message);
       }
     } else {
-      // Update localStorage for guest users
       localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
     }
   };

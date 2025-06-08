@@ -8,7 +8,6 @@ export default function Header() {
 
   const [showLogin, setShowLogin] = useState(false);
 
-  // Close modal when user logs in
   useEffect(() => {
     if (user) {
       setShowLogin(false);

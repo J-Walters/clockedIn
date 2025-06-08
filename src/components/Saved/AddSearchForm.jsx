@@ -29,20 +29,6 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     setShowForm(!showForm);
   };
 
-  //for non user logic
-  // const handleSavedSearch = () => {
-  //   const newSearch = { ...form };
-
-  //   const updatedSearch = [...savedSearches, newSearch];
-  //   localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
-
-  //   setSavedSearches((prev) => {
-  //     return [...prev, newSearch];
-  //   });
-
-  //   clearForm();
-  // };
-
   const handleSavedSearch = async (e) => {
     e.preventDefault();
 
@@ -54,7 +40,6 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     };
 
     if (user) {
-      // Save to Supabase for signed-in user
       const { data, error } = await supabase
         .from('saved_searches')
         .insert([{ ...newSearch, user_id: user.id }]);
@@ -66,7 +51,6 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
 
       setSavedSearches((prev) => [...prev, data[0]]);
     } else {
-      // Save to localStorage for guest
       const updated = [...savedSearches, newSearch];
       localStorage.setItem('savedSearches', JSON.stringify(updated));
       setSavedSearches(updated);
