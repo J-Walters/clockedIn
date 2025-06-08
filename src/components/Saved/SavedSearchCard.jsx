@@ -1,4 +1,4 @@
-import { TrashSimple, PencilSimple } from 'phosphor-react';
+import { TrashSimple, PencilSimple, X, Plus } from 'phosphor-react';
 import { useState } from 'react';
 
 import supabase from '../../supabase-client';
@@ -12,7 +12,12 @@ export default function SavedSearchCard({
   const showSubtext = search.time || search.distance;
 
   const [edit, showEdit] = useState(false);
-  const [form, setForm] = useState(search);
+  const [form, setForm] = useState({
+    ...search,
+    tags: Array.isArray(search.tags) ? search.tags : [],
+  });
+  const [showTagInput, setShowTagInput] = useState(false);
+  const [newTag, setNewTag] = useState('');
 
   const handleEdit = async () => {
     const { error } = await supabase
@@ -42,6 +47,15 @@ export default function SavedSearchCard({
                 {search.distance ? `within ${search.distance} miles` : ''}
               </div>
             )}
+            {search.tags?.length > 0 && (
+              <div className='tag-row static'>
+                {search.tags.map((tag, idx) => (
+                  <span key={idx} className='tag'>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
           <button
             onClick={() => handleDeleteSearch(search)}
@@ -50,18 +64,16 @@ export default function SavedSearchCard({
           >
             <TrashSimple size={16} color='#94423e' />
           </button>
-          <PencilSimple
-            onClick={() => showEdit(true)}
-            size={16}
-            color='#874a21'
-            weight='duotone'
-          />
+          <button onClick={() => showEdit(true)} className='delete-btn'>
+            <PencilSimple size={16} color='#874a21' weight='duotone' />
+          </button>
         </>
       ) : (
         <>
           <div className='edit-form'>
             <label>Title</label>
             <input
+              autoFocus
               type='text'
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
@@ -97,9 +109,69 @@ export default function SavedSearchCard({
                 />
               </div>
             </div>
+            <label>Tags</label>
+            <div className='tag-row'>
+              {form.tags.map((tag, idx) => (
+                <span key={idx} className='tag'>
+                  {tag}
+                  <button
+                    type='button'
+                    onClick={() =>
+                      setForm({
+                        ...form,
+                        tags: form.tags.filter((t) => t !== tag),
+                      })
+                    }
+                    className='remove-tag'
+                  >
+                    <X size={12} weight='bold' />
+                  </button>
+                </span>
+              ))}
+              {showTagInput && (
+                <div className='tag-input-row'>
+                  <input
+                    autoFocus
+                    type='text'
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder='Add tag'
+                  />
+                  <button
+                    type='button'
+                    onClick={() => {
+                      if (newTag.trim() && !form.tags.includes(newTag.trim())) {
+                        setForm({
+                          ...form,
+                          tags: [...form.tags, newTag.trim()],
+                        });
+                        setNewTag('');
+                        setShowTagInput(false);
+                      }
+                    }}
+                  >
+                    Add
+                  </button>
+                </div>
+              )}
+              <button
+                type='button'
+                className='add-tag-button'
+                onClick={() => setShowTagInput(true)}
+              >
+                <Plus size={14} weight='bold' />
+              </button>
+            </div>
             <div className='edit-form-buttons'>
-              <button onClick={handleEdit}>save</button>
-              <button onClick={() => showEdit(false)}>cancel</button>
+              <button className='save-edit-button' onClick={handleEdit}>
+                save
+              </button>
+              <button
+                className='cancel-edit-button'
+                onClick={() => showEdit(false)}
+              >
+                cancel
+              </button>
             </div>
           </div>
         </>
