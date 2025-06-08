@@ -429,3 +429,71 @@ select {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-form label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #5b2e1f;
+}
+
+.edit-form input,
+.edit-form select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #d9bfa7;
+  font-family: inherit;
+  font-size: 14px;
+  background: #fffefc;
+}
+
+.edit-form button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.edit-form button:first-of-type {
+  background-color: #874a21;
+  color: white;
+}
+
+.edit-form button:last-of-type {
+  background-color: #e9ded6;
+  color: #5b2e1f;
+}
+
+.edit-form-row {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap; 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-form-row .half {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.edit-form-buttons button {
+  flex: 1;
+}
+

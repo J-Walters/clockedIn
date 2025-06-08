@@ -59,7 +59,7 @@ export default function SavedSearchCard({
         </>
       ) : (
         <>
-          <div>
+          <div className='edit-form'>
             <label>Title</label>
             <input
               type='text'
@@ -73,26 +73,34 @@ export default function SavedSearchCard({
               value={form.url}
               onChange={(e) => setForm({ ...form, url: e.target.value })}
             />
-
-            <label>Time Frame</label>
-            <select
-              value={form.time}
-              onChange={(e) => setForm({ ...form, time: e.target.value })}
-            >
-              <option value='r1800'>Past 30 Minutes</option>
-              <option value='r3600'>Past Hour</option>
-              <option value='r7200'>Past 2 Hours</option>
-              <option value='r86400'>Past 24 Hours</option>
-            </select>
-
-            <label>Distance</label>
-            <input
-              type='number'
-              value={form.distance}
-              onChange={(e) => setForm({ ...form, distance: e.target.value })}
-            />
-            <button onClick={handleEdit}>save</button>
-            <button onClick={() => showEdit(false)}>cancel</button>
+            <div className='edit-form-row'>
+              <div className='half'>
+                <label>Time Frame</label>
+                <select
+                  value={form.time}
+                  onChange={(e) => setForm({ ...form, time: e.target.value })}
+                >
+                  <option value='r1800'>Past 30 Minutes</option>
+                  <option value='r3600'>Past Hour</option>
+                  <option value='r7200'>Past 2 Hours</option>
+                  <option value='r86400'>Past 24 Hours</option>
+                </select>
+              </div>
+              <div className='half'>
+                <label>Distance</label>
+                <input
+                  type='number'
+                  value={form.distance}
+                  onChange={(e) =>
+                    setForm({ ...form, distance: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+            <div className='edit-form-buttons'>
+              <button onClick={handleEdit}>save</button>
+              <button onClick={() => showEdit(false)}>cancel</button>
+            </div>
           </div>
         </>
       )}
