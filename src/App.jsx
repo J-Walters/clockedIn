@@ -5,7 +5,7 @@ import Saved from './components/Saved/Saved';
 import Search from './components/Search/Search';
 import Header from './components/Header/Header';
 import supabase from './supabase-client';
-import './components/index.css';
+import '../index.css';
 
 export default function App() {
   const { user } = useAuth();
@@ -68,7 +68,7 @@ export default function App() {
       </nav>
       <main>
         {activeTab === 'search' && (
-          <section class='tab-panel'>
+          <section className='tab-panel'>
             <Search
               savedSearches={savedSearches}
               setSavedSearches={setSavedSearches}
@@ -76,7 +76,7 @@ export default function App() {
           </section>
         )}
         {activeTab === 'saved' && (
-          <section class='tab-panel'>
+          <section className='tab-panel'>
             <Saved
               savedSearches={savedSearches}
               setSavedSearches={setSavedSearches}
@@ -84,7 +84,7 @@ export default function App() {
           </section>
         )}
         {activeTab === 'settings' && (
-          <section class='tab-panel'>
+          <section className='tab-panel'>
             <Settings savedSearches={savedSearches} />
           </section>
         )}
