@@ -14,9 +14,7 @@
     "alarms",
     "notifications",
     "storage",
-    "tabs",
-    "identity",
-    "scripting"
+    "tabs"
   ],
     "content_scripts": [
     {

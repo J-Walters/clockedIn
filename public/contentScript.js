@@ -11,18 +11,14 @@ function removePromotedJobs() {
   });
 }
 
-// 2) run once on initial load
 removePromotedJobs();
 
-// 3) watch for LinkedIn’s SPA-style URL changes
 let lastUrl = location.href;
 const urlObserver = new MutationObserver(() => {
   if (location.href !== lastUrl) {
     lastUrl = location.href;
-    // give the new results a moment to render, then scrub again
     setTimeout(removePromotedJobs, 500);
   }
 });
 
-// observe changes anywhere in the document
 urlObserver.observe(document, { childList: true, subtree: true });
