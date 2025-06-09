@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Login from './Login';
-import Modal from '../Modal';
+import Modal from '../Modal/Modal';
 
 export default function Header() {
   const { user } = useAuth();

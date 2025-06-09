@@ -392,60 +392,6 @@ select {
   border-color: #ddbcae;
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(91, 46, 31, 0.4); /* warm brown tint */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.modal-content {
-  background-color: #fffaf5;
-  border: 1px solid #f2d6c6;
-  padding: 16px;
-  border-radius: 12px;
-  width: 280px;
-  max-height: 75vh;
-  overflow-y: auto;
-  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
-  position: relative;
-  animation: fadeIn 0.2s ease-in-out;
-}
-
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  background: none;
-  border: none;
-  color: #9f5630;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.modal-close:hover {
-  color: #c97c4a;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .signin-button {
   position: absolute;
   top: 0;
@@ -631,51 +577,5 @@ select {
   height: 10px;
 }
 
-
-/* .auth-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  margin: 1rem 0;
-}
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid #d9bfa7;
-}
-.divider::before { margin-right: 0.5rem; }
-.divider::after { margin-left: 0.5rem; }
-
-.modeSwitch {
-  text-align: center;
-  font-size: 13px;
-  margin-bottom: 0.5rem;
-}
-.link-button {
-  background: none;
-  border: none;
-  color: #874a21;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.alt-signin-label {
-  text-align: center;
-  font-size: 14px;
-  margin: 0.5rem 0;
-  color: #5b2e1f;
-}
-
-.secondary-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* your existing secondary-button styles */
 
 
