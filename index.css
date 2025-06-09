@@ -13,10 +13,10 @@
 }
 
 body {
-  background-color: #fef6f1; /* warm beige */
+  background-color: #fef6f1; 
   margin: 0;
   padding: 20px;
-  color: #5b2e1f; /* rich brown */
+  color: #5b2e1f; 
   width: 320px;
   height: auto;
   border-radius: 16px;
@@ -59,7 +59,7 @@ h2,
 h1 {
   font-size: 24px;
   font-weight: 600;
-  color: #7c2d12; /* soft brown-red */
+  color: #7c2d12;
   margin-bottom: 16px;
   text-align: center;
 }
@@ -88,7 +88,7 @@ select {
 input:focus,
 select:focus {
   outline: none;
-  border-color: #f59e0b; /* soft gold */
+  border-color: #f59e0b;
   box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
 }
 
@@ -110,8 +110,8 @@ select:focus {
   display: block;
   margin: 1rem auto 0;
   padding: 8px 14px;
-  background-color: #fdf6ed; /* light beige */
-  color: #7c3a1d; /* soft warm brown */
+  background-color: #fdf6ed; 
+  color: #7c3a1d;
   font-weight: 500;
   border: 1px solid #e2cfc3;
   border-radius: 8px;
@@ -133,7 +133,7 @@ select:focus {
 
 .search-button,
 .cancel-button {
-  min-width: 120px; /* Adjust as needed */
+  min-width: 120px;
   padding: 12px 24px;
   text-align: center;
 }
@@ -236,7 +236,7 @@ select:focus {
 .saved-card {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(145deg, #fffaf5, #fef1ea); /* soft warm base */
+  background: linear-gradient(145deg, #fffaf5, #fef1ea);
   border-radius: 16px;
   padding: 1rem 1.25rem;
   margin-bottom: 0.75rem;
@@ -631,5 +631,51 @@ select {
   height: 10px;
 }
 
+
+/* .auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #d9bfa7;
+}
+.divider::before { margin-right: 0.5rem; }
+.divider::after { margin-left: 0.5rem; }
+
+.modeSwitch {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+.link-button {
+  background: none;
+  border: none;
+  color: #874a21;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.alt-signin-label {
+  text-align: center;
+  font-size: 14px;
+  margin: 0.5rem 0;
+  color: #5b2e1f;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* your existing secondary-button styles */
 
 
