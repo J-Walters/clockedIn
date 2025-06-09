@@ -62,7 +62,7 @@ export default function SavedSearchCard({
             className='delete-btn'
             data-url={search.url}
           >
-            <TrashSimple size={16} color='#94423e' />
+            <TrashSimple size={16} color='#874a21' />
           </button>
           <button onClick={() => showEdit(true)} className='delete-btn'>
             <PencilSimple size={16} color='#874a21' weight='duotone' />

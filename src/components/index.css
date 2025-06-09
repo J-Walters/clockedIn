@@ -235,22 +235,33 @@ select:focus {
 
 .saved-card {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background: #fffaf5;
+  flex-direction: column;
+  background: linear-gradient(145deg, #fffaf5, #fef1ea); /* soft warm base */
   border-radius: 16px;
   padding: 1rem 1.25rem;
   margin-bottom: 0.75rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* stronger shadow */
-  border: 1px solid #f2d6c6; /* warm, soft border */
+  box-shadow: 0 4px 10px rgba(91, 46, 31, 0.08);
+  border: 1px solid #f0d7c6;
   box-sizing: border-box;
   width: 100%;
   gap: 0.5rem;
-  transition: box-shadow 0.2s ease;
+  position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .saved-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 16px rgba(91, 46, 31, 0.12);
+  transform: translateY(-1px);
+}
+
+.saved-card:hover {
+  box-shadow: 0 8px 18px rgba(149, 84, 58, 0.12);
+  transform: translateY(-1px);
+}
+
+.saved-card .text {
+  padding-right: 2rem;
+    cursor: pointer;
 }
 
 .saved-card .text strong {
@@ -259,6 +270,7 @@ select:focus {
   font-weight: 600;
   margin-bottom: 4px;
   letter-spacing: 0.2px;
+  color: #5b2e1f;
 }
 
 .saved-card .subtext {
@@ -266,17 +278,45 @@ select:focus {
   font-weight: 500;
   color: #7a5041;
   letter-spacing: 0.2px;
+  margin-bottom: 8px;
+}
+
+.saved-card .tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.saved-card .tag {
+  background-color: #f3dfd2;
+  color: #7c3a1d;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .delete-btn {
+  position: absolute;
+  top: 1.1rem;
+  right: 2.5rem;
   background: none;
   border: none;
-  color: #5b2e1f;
-  font-size: 18px;
+  font-size: 16px;
+  color: #94423e;
   cursor: pointer;
   padding: 0;
-  line-height: 1;
-  margin-left: 1rem;
+}
+
+.delete-btn + .delete-btn {
+  right: 1.1rem; 
+}
+
+.delete-btn:hover,
+.edit-btn:hover {
+  color: #b5573d;
+  transform: scale(1.05);
 }
 
 /* Settings Styling**/
@@ -505,6 +545,24 @@ select {
 
 .edit-form-buttons button {
   flex: 1;
+  padding: 10px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.save-edit-button:hover {
+  background-color: #9b5028;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.cancel-edit-button:hover {
+  background-color: #ede0d9;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 .tag-row {
@@ -544,20 +602,22 @@ select {
 }
 
 .add-tag-button {
+  background-color: #fdf6ed;
+  color: #7c3a1d;
+  border: 1px solid #e2cfc3;
+  font-size: 18px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  border: none;
-  color: #7c3a1d;
-  font-size: 16px;
-  padding: 0;
-  margin-left: 4px;
-  cursor: pointer;
 }
 
 .add-tag-button:hover {
-  color: #a54e2b;
+  background-color: #f9ece3;
+  transform: scale(1.1);
 }
 
 .edit-form .tag {
