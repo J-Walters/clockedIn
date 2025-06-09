@@ -1,3 +1,4 @@
+/* global chrome */
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import supabase from '../../supabase-client';
@@ -17,65 +18,94 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
   const [form, setFormData] = useState({
     title: '',
     time: 'r1800',
-    distance: '',
+    distance: 25,
     sortBy: 'DD',
   });
 
-  function buildLinkedInSearchUrl({ title, time, sortBy }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const buildLinkedInSearchUrl = ({ title, time, distance, sortBy }) => {
     const base = 'https://www.linkedin.com/jobs/search/';
     const params = new URLSearchParams({
       keywords: title,
       f_TPR: time,
       sortBy,
+      distance: distance,
+      //hard coded for nyc metropolitan area
+      geoId: '90000070',
     });
     return `${base}?${params.toString()}`;
-  }
+  };
 
   const handleLiveSearch = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
     const searchUrl = buildLinkedInSearchUrl(form);
 
     const searchEntry = {
       title: form.title,
       time: decodeTimeFrame(form.time),
-      distance: form.distance,
+      distance: form.distance || 25,
       url: searchUrl,
+      sort_by: form.sortBy,
     };
 
-    if (user) {
-      const { data, error } = await supabase
-        .from('saved_searches')
-        .insert([{ ...searchEntry, user_id: user.id }]);
+    try {
+      if (user) {
+        const { data, error } = await supabase
+          .from('saved_searches')
+          .insert([{ ...searchEntry, user_id: user.id }])
+          .select();
 
-      if (error) {
-        console.error('Error completing search', error.message, error.details);
-        return;
+        if (error) throw new Error(error.message);
+
+        setSavedSearches((prev) => [...prev, data[0]]);
+      } else {
+        const updatedSearch = [...savedSearches, searchEntry];
+        localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
+        setSavedSearches(updatedSearch);
       }
-      window.open(searchUrl, '_blank');
 
-      setSavedSearches((prev) => [...prev, data[0]]);
-    } else {
-      const updatedSearch = [...savedSearches, searchEntry];
-      localStorage.setItem('savedSearches', JSON.stringify(updatedSearch));
-      setSavedSearches(updatedSearch);
+      chrome.tabs.create({ url: searchUrl });
+      window.close();
+
+      setFormData({
+        title: '',
+        time: 'r1800',
+        distance: 25,
+        sortBy: 'DD',
+      });
+    } catch (error) {
+      console.error('Error completing search', error);
+      setError('Couldn’t save your search. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    setFormData({
-      title: '',
-      time: 'r1800',
-      distance: '',
-      sortBy: 'DD',
-    });
   };
 
   return (
     <div className='container'>
       <form id='form' onSubmit={handleLiveSearch}>
-        <label htmlFor='radius'>Search Radius (miles):</label>
+        <label htmlFor='keywords'>Keywords:</label>
+        <input
+          type='text'
+          id='keywords'
+          placeholder='e.g., Software Engineer'
+          name='keywords'
+          autoFocus
+          required
+          value={form.title}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, title: e.target.value }))
+          }
+        />
+        <label htmlFor='distance'>Search Radius (miles):</label>
         <input
           type='number'
-          id='radius'
+          id='distance'
           min='0'
           placeholder='25'
           name='distance'
@@ -84,19 +114,6 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
             setFormData((prev) => ({ ...prev, distance: e.target.value }))
           }
         />
-
-        <label htmlFor='keywords'>Keywords:</label>
-        <input
-          type='text'
-          id='keywords'
-          placeholder='e.g., Software Engineer'
-          name='keywords'
-          value={form.title}
-          onChange={(e) =>
-            setFormData((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-
         <label htmlFor='time-filter'>Filter by Time:</label>
         <select
           id='time-filter'
@@ -114,7 +131,6 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
         <p className='helper-text'>
           Select the time frame to filter job postings.
         </p>
-
         <label htmlFor='sort'>Sort By:</label>
         <select
           id='sort'
@@ -130,9 +146,9 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
         <p className='helper-text'>
           Select how you want the job listings to be sorted.
         </p>
-
-        <button className='search-button' type='submit'>
-          Go to LinkedIn
+        {error && <div className='error-message'>{error}</div>}
+        <button className='search-button' type='submit' disabled={loading}>
+          {loading ? 'Searching…' : 'Go to LinkedIn'}
         </button>
       </form>
     </div>

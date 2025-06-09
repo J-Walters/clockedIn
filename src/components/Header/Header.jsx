@@ -5,7 +5,6 @@ import Modal from '../Modal';
 
 export default function Header() {
   const { user } = useAuth();
-
   const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
