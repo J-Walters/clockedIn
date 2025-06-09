@@ -15,7 +15,15 @@
     "notifications",
     "storage",
     "tabs",
-    "identity"
+    "identity",
+    "scripting"
+  ],
+    "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/jobs/*"],
+      "js": ["contentScript.js"],
+      "run_at": "document_idle"
+    }
   ],
     "oauth2": {
     "client_id": "62030700716-sa7aisjquqqvf3cp0r49qcpngq56s53h.apps.googleusercontent.com",
