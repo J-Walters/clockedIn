@@ -1,66 +1,86 @@
-# ClockedIn – Smarter LinkedIn Job Search
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/J-Walters/clockedIn">
+    <img src="src/assets/extension-logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-ClockedIn is a minimal, focused Chrome extension that enhances the job-seeking experience on LinkedIn by giving users finer control over job search filters, especially recency, which LinkedIn buries deep in its UI (or doesn't expose fully at all).
+<h3 align="center">ClockedIn</h3>
+<h4>Smarter LinkedIn Job Search Tool</h4>
 
-## Why I Built It
+  <p align="center">
+A Chrome extension that enhances the job-seeking experience on LinkedIn by giving users finer control over job search filters, especially recency, which LinkedIn buries deep in its UI (or doesn't expose fully at all).
+  </p>
+</div>
 
-LinkedIn search has long frustrated me, especially as a job seeker trying to be early and competitive. I came across a post revealing that if you manipulate LinkedIn job search URLs manually (e.g., by adding `f_TPR=r1800`), you can surface jobs posted as recently as 30 minutes ago, which LinkedIn doesn't surface by default.
+<br />
 
-After testing this "hack," I noticed that applying within the first hour led to a ~5% increase in responses, especially from startups and recruiters doing outreach fast. It's a small edge, but in this market, small edges matter.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-I built ClockedIn to:
-- Simplify that URL manipulation
-- Save job searches for easy reuse
-- Automate something that felt tedious and critical
-- Stay organized while job hunting daily
+
+<p>
+After experiencing an unexpected lay off, I dove headfirst into LinkedIn only to find a job market where most listings already had hundreds or even thousands of applicants. I discovered that by tacking on the parameter f_TPR=r600 to the search URL you can unearth roles posted in the last ten minutes. LinkedIn doesn’t let you do that by default and manually editing URLs is a real pain. So I built Clocked to automate the trick and add filters so you only see the freshest roles. It also hides sponsored posts (often stale or expired) and scrubs out sketchy companies. Now you can spend less time scrolling and more time applying.
+ 
+
+</p>
 
 ---
-
 ### Features
 
-- 🔍 **Search Builder UI**: Customize keyword, search radius, recency (30 minutes to 24 hours)
-- 🌐 **Smart URL Generator**: Generates a valid LinkedIn job search URL using hidden LinkedIn parameters
-- 📋 **History Tab**: View, re-launch, or remove saved searches easily
-- 💡 **No bloat**: Clean, fast popup — designed to stay out of the way
+- ⏱ **Recency Filter**: choose job postings from the last ten minutes up to 24 hours
+- 🚫 **Hide Sponsored Listings**: filter out promoted job ads automatically
+- 🔗 **Smart URL Generator**: build LinkedIn search URLs with hidden recency and other parameters in one click
+- 📂 **Search History & Tracking**: view, relaunch, and delete saved searches; add searches from other sites for centralized listing tracking
+- 🔔 **Apply Reminders**: set customizable hourly (or your chosen interval) Chrome notifications to prompt you to check and apply to jobs
+- 💡 **No Bloat**: clean, fast popup designed to stay out of your way
 
 ---
 
+<!-- Screenshots -->
 ### 📸 Screenshots
 
-<img width="361" alt="Screenshot 2025-05-11 at 12 19 36 AM" src="https://github.com/user-attachments/assets/8bce8703-12ea-422d-b67d-9c67e92da7e1" />
-
-<img width="364" alt="Screenshot 2025-05-11 at 12 20 33 AM" src="https://github.com/user-attachments/assets/db807d26-5214-4a1e-87eb-31f21c972690" />
+<img width="341" alt="Screenshot 2025-06-10 at 7 33 04 PM" src="https://github.com/user-attachments/assets/b3613dbb-1ef4-48c5-92ee-ed0e36e85250" />
+<img width="353" alt="Screenshot 2025-06-10 at 7 33 53 PM" src="https://github.com/user-attachments/assets/c5b1e9d8-5fa1-48d4-996c-e95fb15dc8f1" />
 
 ---
 
-### 🛠 Tech Stack
+<!-- Built with -->
+### 🛠 Built with
 
-- HTML, CSS, JavaScript
-- Chrome Extension API 
+- HTML5, CSS3, JavaScript (ES6+)
 - React
-- Supabase
+- Vite
+- Node.js & npm
+- Chrome Extensions API
+- Supabase (PostgreSQL + Auth)
+- Google Cloud Platform (OAuth for Google Sign-In)
+- Git & GitHub
   
-
 ---
 
+<!-- Author -->
 ### 🙋🏽‍♀️ Author
 
-Built by [Jordan Walters](https://github.com/J-Walters) — because LinkedIn’s search UI sucks.
+Built by [Jordan Walters](https://github.com/J-Walters) - [LinkedIn](https://www.linkedin.com/in/walters-jordan/) - jwalters012@gmail.com 
 
 ---
+<!-- Installation -->
+### 📎 Installation 
 
-### 📎 Installation (Dev Mode)
-
-1. Clone this repo
-2. Go to `chrome://extensions`
-3. Click “Load unpacked” and select the project folder
-4. Pin the extension and click to launch the popup
+1. Clone this repo  `git clone https://github.com/J-Walters/clockedIn.git`
+2. Install dependencies `npm install`
+3. Build the extensions `npm run build`
+4. Go to `chrome://extensions`
+5. Enable Developer mode (toggle in the top right)
+6. Click Load unpacked and select the cloned `dist/` folder
+7. Pin the ClockedIn extension to your toolbar and click the ClockedIn icon to launch the popup
 
 ---
 
 ### 🤝 Contributions
 
-If you’ve figured out other LinkedIn parameter hacks or UX improvements, I’d love to hear them.
+If you’ve figured out other LinkedIn parameter hacks or UX improvements, I’d love to hear them!
 
 ---
 
