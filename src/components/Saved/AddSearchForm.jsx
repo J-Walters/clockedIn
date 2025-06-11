@@ -2,17 +2,20 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import supabase from '../../supabase-client';
+import styles from './AddSearchForm.module.css';
 
 export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [form, setFormData] = useState({
+  const [formData, setFormData] = useState({
     title: '',
     url: '',
     time: '',
-    distance: '',
+    distance: null,
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -23,40 +26,45 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
       title: '',
       url: '',
       time: '',
-      distance: '',
+      distance: null,
     });
 
+    setError('');
     setShowForm(!showForm);
   };
 
   const handleSavedSearch = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
     const newSearch = {
-      title: form.title,
-      url: form.url,
-      time: form.time,
-      distance: form.distance,
+      title: formData.title.trim(),
+      url: formData.url.trim(),
+      time: formData.time,
+      distance: formData.distance,
     };
 
-    if (user) {
-      const { data, error } = await supabase
-        .from('saved_searches')
-        .insert([{ ...newSearch, user_id: user.id }]);
-
-      if (error) {
-        console.error('Error saving search:', error.message, error.details);
-        return;
+    try {
+      if (user) {
+        const { data, error } = await supabase
+          .from('saved_searches')
+          .insert([{ ...newSearch, user_id: user.id }])
+          .select();
+        if (error) throw new Error(error.message);
+        setSavedSearches((prev) => [...prev, data[0]]);
+      } else {
+        const updated = [...savedSearches, newSearch];
+        localStorage.setItem('savedSearches', JSON.stringify(updated));
+        setSavedSearches(updated);
       }
-
-      setSavedSearches((prev) => [...prev, data[0]]);
-    } else {
-      const updated = [...savedSearches, newSearch];
-      localStorage.setItem('savedSearches', JSON.stringify(updated));
-      setSavedSearches(updated);
+      clearForm();
+    } catch (error) {
+      console.error('Error saving search:', error);
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    clearForm();
   };
 
   const handleCopyLink = async () => {
@@ -72,13 +80,14 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
   return (
     <>
       {!showForm ? (
-        <div className='add-new-wrapper'>
+        <div className={styles.addNewWrapper}>
           <button onClick={handleShowForm} className='secondary-button'>
             Add New
           </button>
         </div>
       ) : (
         <form onSubmit={(e) => handleSavedSearch(e)}>
+          {error && <p className='error-message'>{error}</p>}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <input
               type='text'
@@ -86,19 +95,19 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               placeholder='Search Title'
               autoFocus
               required
-              value={form.title}
+              value={formData.title}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, title: e.target.value }))
               }
             />
-            <div className='input-with-button'>
+            <div className={styles.inputWithButton}>
               <input
                 id='url-input'
                 type='url'
                 name='url'
                 placeholder='Search URL'
                 required
-                value={form.url}
+                value={formData.url}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, url: e.target.value }))
                 }
@@ -109,12 +118,12 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
             </div>
             <select
               name='time'
-              value={form.time}
+              value={formData.time}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, time: e.target.value }))
               }
             >
-              <option selected disabled hidden value='Date Posted'>
+              <option disabled value=''>
                 Date Posted
               </option>
               <option value='Past 30 minutes'>Past 30 minutes</option>
@@ -126,21 +135,21 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               type='number'
               name='distance'
               placeholder='Distance (miles)'
-              value={form.distance}
+              value={formData.distance}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, distance: e.target.value }))
               }
             />
-            <div className='button-row'>
-              <button type='submit' className='search-button'>
-                Save
-              </button>
+            <div className={styles.buttonRow}>
               <button
                 onClick={clearForm}
-                className='cancel-button'
+                className={styles.cancelButton}
                 type='button'
               >
                 Cancel
+              </button>
+              <button type='submit' className='search-button'>
+                {loading ? 'Saving…' : 'Save'}
               </button>
             </div>
           </div>
