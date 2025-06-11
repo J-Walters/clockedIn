@@ -126,10 +126,10 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               <option disabled value=''>
                 Date Posted
               </option>
-              <option value='Past 30 minutes'>Past 30 minutes</option>
-              <option value='Past hour'>Past hour</option>
-              <option value='Past 2 hours'>Past 2 hours</option>
-              <option value='Past 24 hours'>Past 24 hours</option>
+              <option value='r1800'>Past 30 minutes</option>
+              <option value='r3600'>Past hour</option>
+              <option value='r7200'>Past 2 hours</option>
+              <option value='r86400'>Past 24 hours</option>
             </select>
             <input
               type='number'
