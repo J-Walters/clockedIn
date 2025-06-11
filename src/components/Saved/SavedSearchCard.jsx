@@ -1,13 +1,13 @@
 import { TrashSimple, PencilSimple, X, Plus } from 'phosphor-react';
 import { useState } from 'react';
-
 import supabase from '../../supabase-client';
+import styles from './SavedSearchCard.module.css';
 
 export default function SavedSearchCard({
   search,
   handleSearchClick,
   handleDeleteSearch,
-  onSave,
+  handleSave,
 }) {
   const showSubtext = search.time || search.distance;
 
@@ -18,39 +18,51 @@ export default function SavedSearchCard({
   });
   const [showTagInput, setShowTagInput] = useState(false);
   const [newTag, setNewTag] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleEdit = async () => {
-    const { error } = await supabase
-      .from('saved_searches')
-      .update({ ...form })
-      .eq('id', search.id);
+    setError('');
+    setLoading(true);
 
-    if (error) {
-      console.error('Error updating search:', error.message);
-      return;
+    try {
+      const { error } = await supabase
+        .from('saved_searches')
+        .update(form)
+        .eq('id', search.id);
+
+      if (error) new Error(error.message);
+
+      handleSave(form);
+      showEdit(false);
+    } catch (error) {
+      console.error('Error updating search:', error);
+      setError('Failed to save changes');
+    } finally {
+      setLoading(false);
     }
-
-    onSave(form);
-    showEdit(false);
   };
 
   return (
-    <li className='saved-card'>
+    <li className={styles.savedCard}>
       {!edit ? (
         <>
-          <div onClick={() => handleSearchClick(search)} className='text'>
-            <strong>{search.title}</strong>
+          <div
+            onClick={() => handleSearchClick(search)}
+            className={styles.text}
+          >
+            <strong className={styles.text}>{search.title}</strong>
             {showSubtext && (
-              <div className='subtext'>
+              <div className={styles.subtext}>
                 {search.time}
                 {search.time && search.distance ? ' • ' : ''}
                 {search.distance ? `within ${search.distance} miles` : ''}
               </div>
             )}
             {search.tags?.length > 0 && (
-              <div className='tag-row static'>
+              <div className={`${styles.tagRow} static`}>
                 {search.tags.map((tag, idx) => (
-                  <span key={idx} className='tag'>
+                  <span key={idx} className={styles.tag}>
                     {tag}
                   </span>
                 ))}
@@ -59,18 +71,18 @@ export default function SavedSearchCard({
           </div>
           <button
             onClick={() => handleDeleteSearch(search)}
-            className='delete-btn'
+            className={styles.iconButton}
             data-url={search.url}
           >
-            <TrashSimple size={16} color='#874a21' />
+            <TrashSimple size={16} weight='duotone' />
           </button>
-          <button onClick={() => showEdit(true)} className='delete-btn'>
-            <PencilSimple size={16} color='#874a21' weight='duotone' />
+          <button onClick={() => showEdit(true)} className={styles.iconButton}>
+            <PencilSimple size={16} weight='duotone' />
           </button>
         </>
       ) : (
         <>
-          <div className='edit-form'>
+          <div className={styles.editForm}>
             <label>Title</label>
             <input
               autoFocus
@@ -85,8 +97,8 @@ export default function SavedSearchCard({
               value={form.url}
               onChange={(e) => setForm({ ...form, url: e.target.value })}
             />
-            <div className='edit-form-row'>
-              <div className='half'>
+            <div className={styles.editFormRow}>
+              <div className={styles.half}>
                 <label>Time Frame</label>
                 <select
                   value={form.time}
@@ -98,7 +110,7 @@ export default function SavedSearchCard({
                   <option value='r86400'>Past 24 Hours</option>
                 </select>
               </div>
-              <div className='half'>
+              <div className={styles.half}>
                 <label>Distance</label>
                 <input
                   type='number'
@@ -110,9 +122,9 @@ export default function SavedSearchCard({
               </div>
             </div>
             <label>Tags</label>
-            <div className='tag-row'>
+            <div className={styles.tagRow}>
               {form.tags.map((tag, idx) => (
-                <span key={idx} className='tag'>
+                <span key={idx} className={styles.tag}>
                   {tag}
                   <button
                     type='button'
@@ -122,14 +134,14 @@ export default function SavedSearchCard({
                         tags: form.tags.filter((t) => t !== tag),
                       })
                     }
-                    className='remove-tag'
+                    className={styles.removeTag}
                   >
                     <X size={12} weight='bold' />
                   </button>
                 </span>
               ))}
               {showTagInput && (
-                <div className='tag-input-row'>
+                <div className={styles.tagInputRow}>
                   <input
                     autoFocus
                     type='text'
@@ -156,19 +168,25 @@ export default function SavedSearchCard({
               )}
               <button
                 type='button'
-                className='add-tag-button'
+                className={styles.addTagButton}
                 onClick={() => setShowTagInput(true)}
               >
                 <Plus size={14} weight='bold' />
               </button>
             </div>
-            <div className='edit-form-buttons'>
-              <button className='save-edit-button' onClick={handleEdit}>
-                save
+            {error && <div className='error-message'>{error}</div>}
+            <div className={styles.editFormButtons}>
+              <button
+                className={styles.saveEditButton}
+                onClick={handleEdit}
+                disabled={loading}
+              >
+                {loading ? 'Saving…' : 'Save'}
               </button>
               <button
-                className='cancel-edit-button'
+                className={styles.cancelEditButton}
                 onClick={() => showEdit(false)}
+                disabled={loading}
               >
                 cancel
               </button>
