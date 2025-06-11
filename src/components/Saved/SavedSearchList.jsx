@@ -10,23 +10,25 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
   };
 
   const handleDeleteSearch = async (searchToDelete) => {
-    const updatedSearches = savedSearches.filter(
-      (search) => search.id !== searchToDelete.id
-    );
+    const previous = [...savedSearches];
+    const updated = previous.filter((s) => s.id !== searchToDelete.id);
 
-    setSavedSearches(updatedSearches);
+    setSavedSearches(updated);
 
-    if (user) {
-      const { error } = await supabase
-        .from('saved_searches')
-        .delete()
-        .eq('id', searchToDelete.id);
-
-      if (error) {
-        console.error('Failed to delete from Supabase:', error.message);
+    try {
+      if (user) {
+        const { error } = await supabase
+          .from('saved_searches')
+          .delete()
+          .eq('id', searchToDelete.id);
+        if (error) throw new Error(error.message);
+      } else {
+        localStorage.setItem('savedSearches', JSON.stringify(updated));
       }
-    } else {
-      localStorage.setItem('savedSearches', JSON.stringify(updatedSearches));
+    } catch (err) {
+      console.error('Failed to delete:', err);
+
+      setSavedSearches(previous);
     }
   };
 
@@ -50,9 +52,9 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
   return (
     <>
       {savedSearches.length > 0 ? (
-        <ul id='saved-list'>{renderedSearches}</ul>
+        <ul>{renderedSearches}</ul>
       ) : (
-        <p>No saved searches</p>
+        <p className='empty-search-list'>No saved searches</p>
       )}
     </>
   );

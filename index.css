@@ -517,3 +517,11 @@ select {
   margin-bottom: .5rem;  
   font-size: .875rem;    
 }
+
+.empty-search-list {
+  color: #7c2d12; 
+  text-align: center;    
+  margin: 1rem 0;     
+  font-size: 18px;  
+  font-weight: 600;
+}
