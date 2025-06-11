@@ -39,7 +39,7 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
         search={search}
         handleSearchClick={handleSearchClick}
         handleDeleteSearch={handleDeleteSearch}
-        onSave={(updated) =>
+        handleSave={(updated) =>
           setSavedSearches((prev) => {
             const withoutOld = prev.filter((item) => item.id !== updated.id);
             return [...withoutOld, updated];
@@ -54,7 +54,7 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
       {savedSearches.length > 0 ? (
         <ul id='saved-list'>{renderedSearches}</ul>
       ) : (
-        <p className='empty-search-list'>No saved searches</p>
+        <p id='empty-search-list'>No saved searches</p>
       )}
     </>
   );

@@ -1,47 +1,75 @@
 /*global chrome*/
 import { useState, useEffect } from 'react';
-import { Bell } from 'phosphor-react';
+import { useAuth } from '../../context/AuthContext';
+import supabase from '../../supabase-client';
 
 export default function Notifications() {
+  const { user } = useAuth();
   const [enabled, setEnabled] = useState(false);
   const [frequency, setFrequency] = useState('');
 
   useEffect(() => {
-    chrome.storage.local.get(['inputKey'], (result) => {
-      if (result.inputKey) {
-        const { enabled: storedEnabled, frequency: storedFrequency } =
-          result.inputKey;
-        setEnabled(storedEnabled);
-        setFrequency(String(storedFrequency));
+    chrome.storage.local.get(['inputKey'], ({ inputKey }) => {
+      if (inputKey) {
+        setEnabled(inputKey.enabled);
+        setFrequency(String(inputKey.frequency));
       }
     });
   }, []);
 
-  function updateStorage(newValues) {
-    chrome.storage.local.set(
-      {
-        inputKey: {
-          enabled,
-          frequency,
-          ...newValues,
-        },
-      },
-      () => {
-        console.log('Chrome storage updated:', {
-          enabled,
-          frequency,
-          ...newValues,
-        });
+  const updateStorage = async (newValues) => {
+    const updated = { enabled, frequency, ...newValues };
+
+    // 1) Chrome storage
+    try {
+      chrome.storage.local.set({ inputKey: updated }, () =>
+        console.log('Chrome storage updated:', updated)
+      );
+    } catch (err) {
+      console.error('chrome.storage failure', err);
+    }
+
+    // 2) Supabase save (update-then-insert)
+    if (!user) return;
+
+    try {
+      // a) Try to update existing row, returning the updated rows
+      const { data: updateData, error: updateErr } = await supabase
+        .from('settings')
+        .update({
+          frequency: Number(updated.frequency),
+          frequency_enabled: updated.enabled,
+        })
+        .eq('user_id', user.id)
+        .select(); // ← this makes `updateData` an array, not null
+
+      if (updateErr) throw updateErr;
+
+      const updatedRows = Array.isArray(updateData) ? updateData : [];
+
+      if (updatedRows.length > 0) {
+        console.log('Updated existing settings row');
+      } else {
+        // b) No rows updated → insert a new one
+        const { error: insertErr } = await supabase.from('settings').insert([
+          {
+            user_id: user.id,
+            frequency: Number(updated.frequency),
+            frequency_enabled: updated.enabled,
+          },
+        ]);
+
+        if (insertErr) throw insertErr;
+        console.log('Inserted new settings row');
       }
-    );
-  }
+    } catch (err) {
+      console.error('Supabase save error:', err.message);
+    }
+  };
 
   return (
     <>
-      <strong className='section-title'>
-        <Bell size={16} />
-        Notifications
-      </strong>
+      <strong className='section-title'>Notifications</strong>
       <label htmlFor='notifications'>Reminder Frequency</label>
       <select
         id='notifications'

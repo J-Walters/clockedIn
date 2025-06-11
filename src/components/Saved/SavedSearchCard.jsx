@@ -1,6 +1,7 @@
 import { TrashSimple, PencilSimple, X, Plus } from 'phosphor-react';
 import { useState } from 'react';
 import supabase from '../../supabase-client';
+import { decodeTimeFrame } from '../../utils/decodeTimeFrame';
 import styles from './SavedSearchCard.module.css';
 
 export default function SavedSearchCard({
@@ -25,15 +26,36 @@ export default function SavedSearchCard({
     setError('');
     setLoading(true);
 
+    let updated = { ...form };
+
+    if (/linkedin\.com\/jobs\/search/.test(updated.url)) {
+      try {
+        const parsed = new URL(updated.url);
+        const params = parsed.searchParams;
+
+        params.set('f_TPR', updated.time);
+
+        if (updated.distance) {
+          params.set('distance', updated.distance);
+        } else {
+          params.delete('distance');
+        }
+
+        updated.url = parsed.toString();
+      } catch (e) {
+        console.warn('Could not parse LinkedIn URL:', updated.url, e);
+      }
+    }
+
     try {
       const { error } = await supabase
         .from('saved_searches')
-        .update(form)
+        .update(updated)
         .eq('id', search.id);
 
       if (error) new Error(error.message);
 
-      handleSave(form);
+      handleSave(updated);
       showEdit(false);
     } catch (error) {
       console.error('Error updating search:', error);
@@ -54,8 +76,8 @@ export default function SavedSearchCard({
             <strong className={styles.text}>{search.title}</strong>
             {showSubtext && (
               <div className={styles.subtext}>
-                {search.time}
-                {search.time && search.distance ? ' • ' : ''}
+                {decodeTimeFrame(search.time)}
+                {decodeTimeFrame(search.time) && search.distance ? ' • ' : ''}
                 {search.distance ? `within ${search.distance} miles` : ''}
               </div>
             )}
@@ -181,7 +203,7 @@ export default function SavedSearchCard({
                 onClick={handleEdit}
                 disabled={loading}
               >
-                {loading ? 'Saving…' : 'Save'}
+                {loading ? 'saving…' : 'save'}
               </button>
               <button
                 className={styles.cancelEditButton}
