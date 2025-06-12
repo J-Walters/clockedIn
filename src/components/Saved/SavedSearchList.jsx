@@ -52,7 +52,19 @@ export default function SavedSearchList({ savedSearches, setSavedSearches }) {
   return (
     <>
       {savedSearches.length > 0 ? (
-        <ul id='saved-list'>{renderedSearches}</ul>
+        <ul
+          style={{
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: '8px',
+          }}
+        >
+          {renderedSearches}
+        </ul>
       ) : (
         <p id='empty-search-list'>No saved searches</p>
       )}

@@ -73,7 +73,7 @@ export default function SavedSearchCard({
             onClick={() => handleSearchClick(search)}
             className={styles.text}
           >
-            <strong className={styles.text}>{search.title}</strong>
+            <strong>{search.title}</strong>
             {showSubtext && (
               <div className={styles.subtext}>
                 {decodeTimeFrame(search.time)}
@@ -82,7 +82,7 @@ export default function SavedSearchCard({
               </div>
             )}
             {search.tags?.length > 0 && (
-              <div className={`${styles.tagRow} static`}>
+              <div className={styles.tagRow}>
                 {search.tags.map((tag, idx) => (
                   <span key={idx} className={styles.tag}>
                     {tag}
@@ -91,130 +91,138 @@ export default function SavedSearchCard({
               </div>
             )}
           </div>
-          <button
-            onClick={() => handleDeleteSearch(search)}
-            className={styles.iconButton}
-            data-url={search.url}
-          >
-            <TrashSimple size={16} weight='duotone' />
-          </button>
-          <button onClick={() => showEdit(true)} className={styles.iconButton}>
-            <PencilSimple size={16} weight='duotone' />
-          </button>
+          <div className={styles.iconContainer}>
+            <button
+              onClick={() => handleDeleteSearch(search)}
+              className={styles.iconButton}
+            >
+              <TrashSimple size={16} weight='duotone' />
+            </button>
+            <button
+              onClick={() => showEdit(true)}
+              className={styles.iconButton}
+            >
+              <PencilSimple size={16} weight='duotone' />
+            </button>
+          </div>
         </>
       ) : (
-        <>
-          <div className={styles.editForm}>
-            <label>Title</label>
-            <input
-              autoFocus
-              type='text'
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-            />
+        <div className={styles.editForm}>
+          <label>Title</label>
+          <input
+            autoFocus
+            type='text'
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
 
-            <label>URL</label>
-            <input
-              type='text'
-              value={form.url}
-              onChange={(e) => setForm({ ...form, url: e.target.value })}
-            />
-            <div className={styles.editFormRow}>
-              <div className={styles.half}>
-                <label>Time Frame</label>
-                <select
-                  value={form.time}
-                  onChange={(e) => setForm({ ...form, time: e.target.value })}
-                >
-                  <option value='r1800'>Past 30 Minutes</option>
-                  <option value='r3600'>Past Hour</option>
-                  <option value='r7200'>Past 2 Hours</option>
-                  <option value='r86400'>Past 24 Hours</option>
-                </select>
-              </div>
-              <div className={styles.half}>
-                <label>Distance</label>
-                <input
-                  type='number'
-                  value={form.distance}
-                  onChange={(e) =>
-                    setForm({ ...form, distance: e.target.value })
-                  }
-                />
-              </div>
+          <label>URL</label>
+          <input
+            type='text'
+            value={form.url}
+            onChange={(e) => setForm({ ...form, url: e.target.value })}
+          />
+
+          <div className={styles.editFormRow}>
+            <div className={styles.half}>
+              <label>Time Frame</label>
+              <select
+                value={form.time}
+                onChange={(e) => setForm({ ...form, time: e.target.value })}
+              >
+                <option value='r1800'>Past 30 Minutes</option>
+                <option value='r3600'>Past Hour</option>
+                <option value='r7200'>Past 2 Hours</option>
+                <option value='r86400'>Past 24 Hours</option>
+              </select>
             </div>
-            <label>Tags</label>
-            <div className={styles.tagRow}>
-              {form.tags.map((tag, idx) => (
-                <span key={idx} className={styles.tag}>
-                  {tag}
-                  <button
-                    type='button'
-                    onClick={() =>
+            <div className={styles.half}>
+              <label>Distance</label>
+              <input
+                type='number'
+                value={form.distance}
+                onChange={(e) => setForm({ ...form, distance: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <label>Tags</label>
+          <div className={styles.tagRow}>
+            {form.tags.map((tag, idx) => (
+              <span key={idx} className={styles.tag}>
+                {tag}
+                <button
+                  type='button'
+                  onClick={() =>
+                    setForm({
+                      ...form,
+                      tags: form.tags.filter((t) => t !== tag),
+                    })
+                  }
+                  className={styles.removeTag}
+                  aria-label='Remove tag'
+                >
+                  <X size={12} weight='bold' />
+                </button>
+              </span>
+            ))}
+            {showTagInput && (
+              <div className={styles.tagInputRow}>
+                <input
+                  autoFocus
+                  type='text'
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                  placeholder='Add tag'
+                />
+                <button
+                  type='button'
+                  onClick={() => {
+                    if (newTag.trim() && !form.tags.includes(newTag.trim())) {
                       setForm({
                         ...form,
-                        tags: form.tags.filter((t) => t !== tag),
-                      })
+                        tags: [...form.tags, newTag.trim()],
+                      });
+                      setNewTag('');
+                      setShowTagInput(false);
                     }
-                    className={styles.removeTag}
-                  >
-                    <X size={12} weight='bold' />
-                  </button>
-                </span>
-              ))}
-              {showTagInput && (
-                <div className={styles.tagInputRow}>
-                  <input
-                    autoFocus
-                    type='text'
-                    value={newTag}
-                    onChange={(e) => setNewTag(e.target.value)}
-                    placeholder='Add tag'
-                  />
-                  <button
-                    type='button'
-                    onClick={() => {
-                      if (newTag.trim() && !form.tags.includes(newTag.trim())) {
-                        setForm({
-                          ...form,
-                          tags: [...form.tags, newTag.trim()],
-                        });
-                        setNewTag('');
-                        setShowTagInput(false);
-                      }
-                    }}
-                  >
-                    Add
-                  </button>
-                </div>
-              )}
+                  }}
+                >
+                  Add
+                </button>
+              </div>
+            )}
+            {!showTagInput && (
               <button
                 type='button'
                 className={styles.addTagButton}
                 onClick={() => setShowTagInput(true)}
+                aria-label='Add tag'
               >
                 <Plus size={14} weight='bold' />
               </button>
-            </div>
-            {error && <div className='error-message'>{error}</div>}
-            <div className={styles.editFormButtons}>
-              <button
-                className={styles.saveEditButton}
-                onClick={handleEdit}
-                disabled={loading}
-              >
-                {loading ? 'saving…' : 'save'}
-              </button>
-              <button
-                className={styles.cancelEditButton}
-                onClick={() => showEdit(false)}
-                disabled={loading}
-              >
-                cancel
-              </button>
-            </div>
+            )}
           </div>
-        </>
+
+          {error && <div className={styles.error}>{error}</div>}
+
+          <div className={styles.editFormButtons}>
+            <button
+              className={styles.saveEditButton}
+              onClick={handleEdit}
+              disabled={loading}
+            >
+              {loading ? 'saving…' : 'save'}
+            </button>
+            <button
+              className={styles.cancelEditButton}
+              onClick={() => showEdit(false)}
+              disabled={loading}
+            >
+              cancel
+            </button>
+          </div>
+        </div>
       )}
     </li>
   );
