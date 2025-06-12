@@ -4,13 +4,41 @@ import Settings from './components/Settings/Settings';
 import Saved from './components/Saved/Saved';
 import Search from './components/Search/Search';
 import Header from './components/Header/Header';
+import Tabs from './components/Tabs/Tabs';
 import supabase from './supabase-client';
 import '../index.css';
 
 export default function App() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState('search');
   const [savedSearches, setSavedSearches] = useState([]);
+
+  const tabs = [
+    {
+      id: 'search',
+      label: 'Search',
+      content: (
+        <Search
+          savedSearches={savedSearches}
+          setSavedSearches={setSavedSearches}
+        />
+      ),
+    },
+    {
+      id: 'saved',
+      label: 'Saved',
+      content: (
+        <Saved
+          savedSearches={savedSearches}
+          setSavedSearches={setSavedSearches}
+        />
+      ),
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      content: <Settings />,
+    },
+  ];
 
   async function fetchSavedSearches(user) {
     const { data, error } = await supabase
@@ -46,48 +74,8 @@ export default function App() {
   return (
     <div className='container'>
       <Header />
-      <nav className='tabs'>
-        <button
-          className={`tab-button ${activeTab === 'search' ? 'active' : ''}`}
-          onClick={() => setActiveTab('search')}
-        >
-          Search
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'saved' ? 'active' : ''}`}
-          onClick={() => setActiveTab('saved')}
-        >
-          Saved
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
-          onClick={() => setActiveTab('settings')}
-        >
-          Settings
-        </button>
-      </nav>
       <main>
-        {activeTab === 'search' && (
-          <section className='tab-panel'>
-            <Search
-              savedSearches={savedSearches}
-              setSavedSearches={setSavedSearches}
-            />
-          </section>
-        )}
-        {activeTab === 'saved' && (
-          <section className='tab-panel'>
-            <Saved
-              savedSearches={savedSearches}
-              setSavedSearches={setSavedSearches}
-            />
-          </section>
-        )}
-        {activeTab === 'settings' && (
-          <section className='tab-panel'>
-            <Settings savedSearches={savedSearches} />
-          </section>
-        )}
+        <Tabs tabs={tabs} />
       </main>
     </div>
   );
