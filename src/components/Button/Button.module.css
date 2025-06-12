@@ -1,0 +1,42 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-base);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .2s ease;
+}
+
+.search {
+  background-color: var(--color-terracotta);
+  color: var(--color-cream);
+  padding: var(--space-sm) var(--space-lg);
+  border: 2px solid var(--color-espresso);
+  border-radius: var(--radius-md);
+  width: 100%;
+  font-size: var(--font-lg);
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.search:hover {
+  background-color: var(--color-burnt-sienna);
+}
+
+.secondary {
+  background: var(--color-cream);
+  color: var(--color-chocolate-brown);
+  border: 1px solid var(--color-muted-mustard);
+}
+.secondary:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.submit {
+  width: 100%;
+}
+
+

@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import supabase from '../../supabase-client';
+import styles from './LiveSearchForm.module.css';
+import Button from '../Button/Button';
 
 export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
   const { user } = useAuth();
@@ -77,14 +79,17 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
   };
 
   return (
-    <div className='container'>
-      <form id='form' onSubmit={handleLiveSearch}>
-        <label htmlFor='keywords'>Keywords:</label>
+    <form className={styles.form} onSubmit={handleLiveSearch}>
+      <div className={styles.field}>
+        <label htmlFor='keywords' className={styles.label}>
+          Keywords:
+        </label>
         <input
-          type='text'
           id='keywords'
+          name='title'
+          type='text'
           placeholder='e.g., Software Engineer'
-          name='keywords'
+          className={styles.input}
           autoFocus
           required
           value={form.title}
@@ -92,22 +97,32 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
             setFormData((prev) => ({ ...prev, title: e.target.value }))
           }
         />
-        <label htmlFor='distance'>Search Radius (miles):</label>
+      </div>
+      <div className={styles.field}>
+        <label htmlFor='distance' className={styles.label}>
+          Search Radius (miles):
+        </label>
         <input
-          type='number'
           id='distance'
+          name='distance'
+          type='number'
           min='0'
           placeholder='25'
-          name='distance'
+          className={styles.input}
           value={form.distance}
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, distance: e.target.value }))
           }
         />
-        <label htmlFor='time-filter'>Filter by Time:</label>
+      </div>
+      <div className={styles.field}>
+        <label htmlFor='time-filter' className={styles.label}>
+          Filter by Time:
+        </label>
         <select
           id='time-filter'
-          name='f_TPR'
+          name='time'
+          className={styles.select}
           value={form.time}
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, time: e.target.value }))
@@ -118,13 +133,18 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
           <option value='r7200'>Past 2 Hours</option>
           <option value='r86400'>Past 24 Hours</option>
         </select>
-        <p className='helper-text'>
+        <span className={styles.helper}>
           Select the time frame to filter job postings.
-        </p>
-        <label htmlFor='sort'>Sort By:</label>
+        </span>
+      </div>
+      <div className={styles.field}>
+        <label htmlFor='sort' className={styles.label}>
+          Sort By:
+        </label>
         <select
           id='sort'
           name='sortBy'
+          className={styles.select}
           value={form.sortBy}
           onChange={(e) =>
             setFormData((prev) => ({ ...prev, sortBy: e.target.value }))
@@ -133,14 +153,16 @@ export default function LiveSearchForm({ savedSearches, setSavedSearches }) {
           <option value='R'>Relevance</option>
           <option value='DD'>Most Recent</option>
         </select>
-        <p className='helper-text'>
+        <span className={styles.helper}>
           Select how you want the job listings to be sorted.
-        </p>
-        {error && <div className='error-message'>{error}</div>}
-        <button className='search-button' type='submit' disabled={loading}>
+        </span>
+      </div>
+      {error && <div className={styles.error}>{error}</div>}
+      <div className={styles.buttonWrapper}>
+        <Button variant='search' type='submit' disabled={loading}>
           {loading ? 'Searching…' : 'Go to LinkedIn'}
-        </button>
-      </form>
-    </div>
+        </Button>
+      </div>
+    </form>
   );
 }
