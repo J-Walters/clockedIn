@@ -38,10 +38,9 @@ After experiencing an unexpected lay off, I dove headfirst into LinkedIn only to
 ---
 
 <!-- Screenshots -->
-### 📸 Screenshots
+### 📸 Usage
 
-<img width="341" alt="Screenshot 2025-06-10 at 7 33 04 PM" src="https://github.com/user-attachments/assets/b3613dbb-1ef4-48c5-92ee-ed0e36e85250" />
-<img width="353" alt="Screenshot 2025-06-10 at 7 33 53 PM" src="https://github.com/user-attachments/assets/c5b1e9d8-5fa1-48d4-996c-e95fb15dc8f1" />
+![clockedin](https://github.com/user-attachments/assets/d62ff5b4-844c-40e9-8915-46c67bb2fa61)
 
 ---
 
