@@ -4,10 +4,18 @@
   font-weight: 400;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Clash Grotesk Bold';
   src: url('/fonts/ClashGrotesk-Bold.woff') format('woff');
   font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Clash Grotesk Semibold';
+  src: url('/fonts/ClashGrotesk-Semibold.woff') format('woff');
+  font-weight: 600;
   font-style: normal;
 }
 
@@ -22,6 +30,12 @@
 
    --color-panel-bg: #f2d9ab;
    --color-tab-bg: #ebcb9a;
+
+  --color-retro-olive:     #B5AE75;
+  --color-avocado:         #8A9A5B;
+  --color-sage:            #A7AE9E;
+
+  --color-dusty-blue: #5A8F87;
 
   --space-xs: 4px;
   --space-sm: 8px;

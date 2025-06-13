@@ -21,9 +21,10 @@
 }
 
 .text strong {
+  font-family: 'Clash Grotesk Semibold', sans-serif;
   display: block;
   font-size: var(--font-lg);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-chocolate-brown);
   margin-bottom: var(--space-xs);
 }
@@ -44,7 +45,7 @@
 .tag {
   display: flex;
   align-items: center;    
-  background: var(--color-muted-mustard);
+  background: var(--color-retro-olive);
   color: var(--color-espresso);
   padding: 2px var(--space-sm);
   border-radius: var(--radius-sm);
@@ -71,7 +72,7 @@
 .editForm input,
 .editForm select {
   padding: var(--space-sm);
-  border: 2px solid var(--color-burnt-sienna);
+  border: 2px solid var(--color-retro-olive);
   border-radius: var(--radius-md);
   background: var(--color-cream);
   font-size: var(--font-base);
@@ -83,8 +84,8 @@
 
 .editForm input:focus,
 .editForm select:focus {
-  border-color: var(--color-terracotta);
-  box-shadow: 0 0 0 3px rgba(201,124,74,0.25);
+  border: 2px solid var(--color-avocado);
+  box-shadow: 0 0 0 2px #757c4a;
   outline: none;
 }
 
@@ -145,20 +146,24 @@
   border: none;
 }
 
+.saveEditButton:hover {
+  background: var(--color-burnt-sienna);
+}
+
 .cancelEditButton {
   background: var(--color-cream);
   color: var(--color-chocolate-brown);
   border: 2px solid var(--color-espresso);
 }
 
-.saveEditButton:hover {
-  background: var(--color-burnt-sienna);
-}
-
 .cancelEditButton:hover {
   background: var(--color-espresso);
   color: var(--color-cream);
 }
+
+
+
+
 
 .iconContainer {
   position: absolute;
@@ -193,16 +198,17 @@
   flex: 1;
   font-size: 1rem;
   padding: 6px 14px;
-  border: 2px solid var(--color-espresso);
+  border: 2px solid var(--color-retro-olive);
   border-radius: var(--radius-sm);
   background: var(--color-cream);
   color: var(--color-espresso);
   outline: none;
   transition: border 0.2s;
 }
+
 .tagInputRow input:focus {
-  border: 2px solid var(--color-terracotta);
-  box-shadow: 0 0 0 2px #f5c7a4;
+  border: 2px solid var(--color-avocado);
+  box-shadow: 0 0 0 2px #757c4a;
 }
 
 .tagInputRow button {

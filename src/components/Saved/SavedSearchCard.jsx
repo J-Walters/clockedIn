@@ -122,7 +122,6 @@ export default function SavedSearchCard({
             value={form.url}
             onChange={(e) => setForm({ ...form, url: e.target.value })}
           />
-
           <div className={styles.editFormRow}>
             <div className={styles.half}>
               <label>Time Frame</label>
@@ -141,11 +140,11 @@ export default function SavedSearchCard({
               <input
                 type='number'
                 value={form.distance}
+                placeholder='25'
                 onChange={(e) => setForm({ ...form, distance: e.target.value })}
               />
             </div>
           </div>
-
           <label>Tags</label>
           <div className={styles.tagRow}>
             {form.tags.map((tag, idx) => (
@@ -160,7 +159,6 @@ export default function SavedSearchCard({
                     })
                   }
                   className={styles.removeTag}
-                  aria-label='Remove tag'
                 >
                   <X size={12} weight='bold' />
                 </button>
@@ -197,15 +195,12 @@ export default function SavedSearchCard({
                 type='button'
                 className={styles.addTagButton}
                 onClick={() => setShowTagInput(true)}
-                aria-label='Add tag'
               >
                 <Plus size={14} weight='bold' />
               </button>
             )}
           </div>
-
           {error && <div className={styles.error}>{error}</div>}
-
           <div className={styles.editFormButtons}>
             <button
               className={styles.saveEditButton}

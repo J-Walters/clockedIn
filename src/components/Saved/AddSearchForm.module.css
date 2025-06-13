@@ -3,23 +3,61 @@
   justify-content: flex-end;
   /* margin-top: 1rem; */
   margin-bottom: 1rem;
+  width: 100%;
+}
+
+.addSearchPanel {
+  background: var(--color-panel-bg);
+  border: 2px dashed var(--color-chocolate-brown);
+  border-radius: 16px;
+  padding: 1.5rem 1rem 1rem 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 8px 0 #e1b889; 
+}
+
+.addSearchContainer {
+  display: 'flex';
+  flex-direction: 'column';
+  gap: '8px;'
+}
+
+.addSearchPanel input, .addSearchPanel select {
+  padding: var(--space-sm);
+  border: 2px solid var(--color-retro-olive);
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+  font-size: var(--font-base);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: var(--color-chocolate-brown);
+  font-family: 'Clash Grotesk', Arial, sans-serif;
+}
+
+.addSearchPanel input:focus, .addSearchPanel select:focus {
+  border: 2px solid var(--color-avocado);
+  box-shadow: 0 0 0 2px #757c4a;
+  outline: none;
 }
 
 .inputWithButton {
   position: relative;
-  display: flex;
-  align-items: center;
   width: 100%;
 }
 
 .inputWithButton input {
   width: 100%;
-  padding: 10px 90px 10px 10px; 
-  font-size: 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background-color: #fff;
+  padding: var(--space-sm) 5.3rem var(--space-sm) var(--space-sm);
+  font-size: var(--font-base);
+  border: 2px solid var(--color-retro-olive);
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+  color: var(--color-chocolate-brown);
+  font-family: 'Clash Grotesk', Arial, sans-serif;
   box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  height: 2.4rem;
 }
 
 .inputWithButton button {
@@ -27,42 +65,24 @@
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  padding: 6px 10px;
-  font-size: 13px;
-  background-color: #fdf6ed;
-  color: #7c3a1d;
-  border: 1px solid #e2cfc3;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.inputWithButton button:hover {
-  background-color: #f9ece3;
-  border-color: #ddbcae;
-}
-
-.cancelButton {
-  margin-top: 12px;
-  margin-bottom: 1rem;
-  padding: 12px 16px;
-  background-color: #fdf6ed;
-  color: #9f5630;
+  padding: 6px 14px;
+  font-size: var(--font-base, 1rem); 
+  background-color: var(--color-muted-mustard);  
+  color: var(--color-chocolate-brown);         
+  border-radius: var(--radius-md);                        
+  font-family: 'Clash Grotesk', Arial, sans-serif;
   font-weight: 600;
-  border: 1px solid #f3ded1;
-  border-radius: 10px;
-  font-size: 15px;
   cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
-  transition: background 0.2s ease, border-color 0.2s ease;
-    min-width: 120px;
-  padding: 12px 24px;
-  text-align: center;
+  transition: background 0.18s, border-color 0.18s;
 }
 
-.cancelButton:hover {
-  background-color: #f9ece3;
-  border-color: #ddbcae;
+.inputWithButton button:hover,
+.inputWithButton button:focus {
+  background: var(--color-avocado);
+  color: var(--color-cream);
+  border-color: var(--color-avocado);
+  outline: none;
+  box-shadow: none;
 }
 
 .buttonRow {
@@ -71,3 +91,33 @@
   gap: 16px;
   margin-top: 20px;
 }
+
+.saveButton,
+.cancelButton {
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background: var(--color-cream);
+  color: var(--color-chocolate-brown);
+  border: 2px solid var(--color-espresso);
+}
+
+.cancelButton:hover {
+  background: var(--color-espresso);
+  color: var(--color-cream);
+}
+
+.saveButton {
+  background: var(--color-terracotta);
+  color: var(--color-cream);
+  border: none;
+}
+
+.saveButton:hover {
+  background: var(--color-burnt-sienna);
+}
+

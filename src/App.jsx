@@ -47,6 +47,7 @@ export default function App() {
       .eq('user_id', user.id);
 
     if (error) {
+      console.log('error', error.message, error.details);
       console.error('Failed to fetch saved searches:', error);
       return [];
     }

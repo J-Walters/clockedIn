@@ -5,5 +5,5 @@ export const decodeTimeFrame = (value) => {
     r7200: 'Past 2 hours',
     r86400: 'Past 24 hours',
   };
-  return map[value] || 'Recent';
+  return map[value] || '';
 };

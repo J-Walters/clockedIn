@@ -1,6 +1,7 @@
 /*global chrome*/
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Button from '../Button/Button';
 import supabase from '../../supabase-client';
 import styles from './AddSearchForm.module.css';
 
@@ -81,12 +82,15 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
     <>
       {!showForm ? (
         <div className={styles.addNewWrapper}>
-          <button onClick={handleShowForm} className='secondary-button'>
+          <Button variant='search' type='submit' onClick={handleShowForm}>
             Add New
-          </button>
+          </Button>
         </div>
       ) : (
-        <form onSubmit={(e) => handleSavedSearch(e)}>
+        <form
+          className={styles.addSearchPanel}
+          onSubmit={(e) => handleSavedSearch(e)}
+        >
           {error && <p className='error-message'>{error}</p>}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <input
@@ -113,7 +117,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
                 }
               />
               <button id='copy-button' type='button' onClick={handleCopyLink}>
-                {copied ? 'Copied!' : 'Copy From URL'}
+                {copied ? 'Copied!' : 'Copy URL'}
               </button>
             </div>
             <select
@@ -148,7 +152,7 @@ export default function AddNewSearch({ savedSearches, setSavedSearches }) {
               >
                 Cancel
               </button>
-              <button type='submit' className='search-button'>
+              <button type='submit' className={styles.saveButton}>
                 {loading ? 'Saving…' : 'Save'}
               </button>
             </div>
