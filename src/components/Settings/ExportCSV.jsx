@@ -1,4 +1,5 @@
 import { Export } from 'phosphor-react';
+import Button from '../Button/Button';
 
 export default function ExportCSV({ savedSearches }) {
   function convertToCSV(data) {
@@ -26,11 +27,21 @@ export default function ExportCSV({ savedSearches }) {
   };
   return (
     <>
-      <strong className='section-title'>Saved Searches</strong>
-      <button onClick={handleExport} className='secondary-button'>
-        <Export size={16} color='#874a21' />
+      <strong
+        className='section-title'
+        style={{
+          fontSize: '16px',
+          fontWeight: 600,
+          color: '#5b2e1f',
+          marginBottom: '4px',
+        }}
+      >
+        Saved Searches
+      </strong>
+      <Button onClick={handleExport}>
+        {/* <Export size={16} color='#874a21' /> */}
         Export saved searches
-      </button>
+      </Button>
     </>
   );
 }

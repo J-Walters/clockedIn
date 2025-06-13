@@ -4,7 +4,14 @@ import Profile from './Profile';
 
 export default function Setting({ savedSearches }) {
   return (
-    <div className='settings-group'>
+    <div
+      style={{
+        display: ' flex',
+        flexDirection: 'column',
+        gap: '12px',
+        marginBottom: '1rem',
+      }}
+    >
       <Profile />
       <Notfications />
       <ExportCSV savedSearches={savedSearches} />

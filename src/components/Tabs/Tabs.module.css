@@ -21,6 +21,8 @@
   cursor: pointer;
   position: relative;
   transition: color 0.2s;
+  font-family: 'Clash Grotesk', sans-serif;
+  font-weight: 500;
 }
 
 .tabBtn:hover {
@@ -28,10 +30,11 @@
 }
 
 .tabBtnActive {
-  color: var(--color-terracotta);
+  color: var(--color-dusty-blue);
+  font-family: 'Clash Grotesk Semibold', sans-serif;
 }
 
-.tabBtnActive::after {
+/* .tabBtnActive::after {
   content: '';
   position: absolute;
   bottom: -4px;
@@ -41,7 +44,7 @@
   background: var(--color-terracotta);
   border-radius: var(--radius-sm);
   border-bottom: none;
-}
+} */
 
 .panel {
   display: flex;
@@ -51,7 +54,7 @@
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   padding: var(--space-md);
   margin-top: -4px;
-  border: 2px solid var(--color-espresso);                        
+  border: 2px solid var(--color-espresso);
 }
 
 .hidden {

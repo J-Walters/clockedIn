@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { UserCircle } from 'phosphor-react';
-import Login from './Login';
+import Login from '../Login/Login';
 import Modal from '../Modal/Modal';
 import styles from './Header.module.css';
 

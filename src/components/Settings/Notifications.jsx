@@ -69,12 +69,32 @@ export default function Notifications() {
 
   return (
     <>
-      <strong className='section-title'>Notifications</strong>
+      <strong
+        className='section-title'
+        style={{
+          fontSize: '16px',
+          fontWeight: 600,
+          color: '#5b2e1f',
+          marginBottom: '4px',
+        }}
+      >
+        Notifications
+      </strong>
       <label htmlFor='notifications'>Reminder Frequency</label>
       <select
         id='notifications'
         name='notifications'
         value={frequency}
+        style={{
+          border: '2px solid #C97C4A',
+          borderRadius: '12px',
+          padding: '0 16px',
+          height: '40px',
+          fontSize: '14px',
+          background: '#efd9b5',
+          color: '#5d3520',
+          transition: 'border-color 0.2s, box-shadow 0.2s',
+        }}
         onChange={(e) => {
           const newFrequency = e.target.value;
           setFrequency(newFrequency);
