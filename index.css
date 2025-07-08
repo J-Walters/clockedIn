@@ -27,15 +27,13 @@
   --color-muted-mustard:   #D4A373;
   --color-terracotta:      #9E4B25;
   --color-espresso:        #3A2E29;
-
-   --color-panel-bg: #f2d9ab;
-   --color-tab-bg: #ebcb9a;
-
   --color-retro-olive:     #B5AE75;
   --color-avocado:         #8A9A5B;
   --color-sage:            #A7AE9E;
-
   --color-dusty-blue: #5A8F87;
+
+  --color-panel-bg: #f2d9ab;
+  --color-tab-bg: #ebcb9a;
 
   --space-xs: 4px;
   --space-sm: 8px;
@@ -54,7 +52,7 @@
 body {
   margin: 0;
   padding: var(--space-md);
-  background-color: var(--color-cream);
+  background-color: var(--color-dusty-blue);
   color: var(--color-chocolate-brown);
   font-family: 'Clash Grotesk', sans-serif;
   font-size: var(--font-base); 

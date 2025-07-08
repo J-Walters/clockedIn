@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-cream);
+  background-color: var(--color-dusty-blue);
   padding: var(--space-md);
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
@@ -11,9 +11,17 @@
 
 .title {
   margin: 0;
-  font-family: 'Clash Grotesk Bold', sans-serif;
-  font-size: var(--font-xl);
-  color: var(--color-chocolate-brown);
+  font-family: 'Clash Grotesk Bold', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 2.3rem;
+  letter-spacing: 1.5px;
+  color: #5d3520;
+  text-transform: uppercase;  
+  transform: skewX(-8deg);
+  text-shadow:
+    0 2px 0 #efd9b5,     
+    2px 4px 0 #C97C4A,  
+    4px 7px 0 #9E4B25;
 }
 
 .toolbar {

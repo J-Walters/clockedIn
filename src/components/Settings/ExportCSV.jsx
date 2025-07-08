@@ -40,7 +40,7 @@ export default function ExportCSV({ savedSearches }) {
       </strong>
       <Button onClick={handleExport}>
         {/* <Export size={16} color='#874a21' /> */}
-        Export saved searches
+        Export Saved Searches
       </Button>
     </>
   );

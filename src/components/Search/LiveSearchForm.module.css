@@ -20,9 +20,9 @@
 
 .input,
 .select {
-  border: 2px solid var(--color-burnt-sienna);
-  border-radius: var(--radius-md); 
-  padding: 0 var(--space-md);
+  border: 2px solid #C97C4A;
+  border-radius: 12px;
+  padding: 0 16px;;
   height: 40px;                  
   font-size: var(--font-base);
   background: var(--color-cream);

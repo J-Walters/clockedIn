@@ -29,7 +29,7 @@ export default function Header() {
         </button>
       )}
 
-      <h1 className={styles.title}>ClockedIn</h1>
+      <h1 className={styles.title}>CLOCKED IN</h1>
 
       {showLogin && (
         <Modal onClose={() => setShowLogin(false)}>
